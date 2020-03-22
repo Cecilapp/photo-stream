@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Photo stream (powered by Cecil)</title>
+    <base href="{{ url() }}">
+    <style>
+      section{
+        display: flex;
+        flex-wrap: wrap;
+      }
+      section::after{
+        content: '';
+        flex-grow: 999999999;
+      }
+      div{
+        flex-grow: 1;
+        margin: 2px;
+        background-color: white;
+        height: 200px;
+      }
+      img{
+        height: 200px;
+        object-fit: cover;
+        max-width: 100%;
+        min-width: 100%;
+        vertical-align: bottom;
+      }
+    </style>
+  </head>
+  <body>
+    <p>Photo stream</p>
+    <section>
+{% for file in site.static if file.ext in ['jpg', 'jpeg'] %}
+      <div>
+        <a href="{{ url(file.path) }}"><img src="{{ url(file.path|resize(800)) }}" alt="{{ file.basename }}" loading="lazy"></a>
+      </div>
+{% endfor %}
+    </section>
+    <p>Photos from <a href="https://unsplash.com/s/photos/open-source">Unsplash</a>.</p>
+  </body>
+</html>
