@@ -1,10 +1,8 @@
-title: "Cecil"
-baseline: "Your content driven static site generator."
+title: "Photo stream"
 baseurl: https://cecil.local/
-description: "Cecil is a CLI application that merges plain text files (written in Markdown), images and Twig templates to generate a static website."
 author:
-  name: Arnaud Ligny
-  url: https://arnaudligny.fr
+  name: Unsplash
+  url: https://unsplash.com/s/photos/open-source
 static:
   load: true
 cache:
