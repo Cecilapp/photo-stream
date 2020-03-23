@@ -3,9 +3,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Photo stream (powered by Cecil)</title>
+    <title>{{ site.title }} (powered by Cecil)</title>
     <base href="{{ url() }}">
+    <link rel="canonical" href="{{ url() }}">
     <style>
+      body {
+        font: 16px/24px -apple-system, Roboto, Helvetica, Arial, sans-serif;
+        background: #000;
+        color: #fff;
+        margin: 2px;
+      }
       section{
         display: flex;
         flex-wrap: wrap;
@@ -17,7 +24,7 @@
       div{
         flex-grow: 1;
         margin: 2px;
-        background-color: white;
+        background-color: #000;
         height: 200px;
       }
       img{
@@ -27,17 +34,23 @@
         min-width: 100%;
         vertical-align: bottom;
       }
+      a {
+        color: #fff;
+      }
+      footer {
+        margin: 10px;
+        text-align: right;
+      }
     </style>
   </head>
   <body>
-    <p>Photo stream</p>
     <section>
-{% for file in site.static if file.ext in ['jpg', 'jpeg'] %}
+{% for file in site.static|sort((a, b) => a.updated > b.updated) if file.ext in ['jpg', 'jpeg'] %}
       <div>
         <a href="{{ url(file.path) }}"><img src="{{ url(file.path|resize(800)) }}" alt="{{ file.basename }}" loading="lazy"></a>
       </div>
 {% endfor %}
     </section>
-    <p>Photos from <a href="https://unsplash.com/s/photos/open-source">Unsplash</a>.</p>
+    <footer>Photos from <a href="{{ site.author.url }}">{{ site.author.name }}</a> - Powered by <a href="https://cecil.app">Cecil</a></footer>
   </body>
 </html>
