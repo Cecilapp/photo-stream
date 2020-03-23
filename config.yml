@@ -1,5 +1,6 @@
-title: "Photo stream"
-baseurl: https://cecil.local/
+title: "Photo Stream"
+description: "Super simple photo stream, powered by Cecil"
+baseurl: "/"
 author:
   name: Unsplash
   url: https://unsplash.com/s/photos/open-source
