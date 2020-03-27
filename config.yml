@@ -6,7 +6,7 @@ author:
   url: https://unsplash.com/s/photos/open-source
 output:
   pagetypeformats:
-    homepage: html
+    homepage: [html]
 virtualpages:
   - path: ''
     layout: photos
