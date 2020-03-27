@@ -4,6 +4,9 @@ baseurl: "https://photo-stream.cecil.app/"
 author:
   name: Unsplash
   url: https://unsplash.com/s/photos/open-source
+virtualpages:
+  - path: ''
+    layout: photos
 static:
   load: true
 cache:
