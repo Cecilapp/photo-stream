@@ -7,9 +7,6 @@ author:
 output:
   pagetypeformats:
     homepage: html
-virtualpages:
-  - path: ''
-    layout: photos
 defaultpages:
   sitemap:
     published: false
