@@ -14,5 +14,5 @@ static:
   load: true
 cache:
   enabled: true
-optimize:
+postprocess:
   enabled: true
