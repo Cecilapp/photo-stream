@@ -54,7 +54,7 @@
     <main>
 {% for file in site.static|sort((a, b) => a.date|date('U') < b.date|date('U')) if file.path matches '/^photos/' %}
       <div>
-        <a href="{{ url(file.path) }}"><img src="{{ url(file.path|resize(800)) }}" alt="{{ file.basename }}" loading="lazy"></a>
+        <a href="{{ url(file.path) }}"><img src="{{ url(file.path|resize(800)) }}" alt="{{ file.basename }}" loading="lazy" date="{{ file.date|date }}"></a>
       </div>
 {% endfor %}
     </main>
