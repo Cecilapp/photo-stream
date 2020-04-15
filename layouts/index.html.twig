@@ -52,7 +52,7 @@
   </head>
   <body>
     <main>
-{% for file in site.static|sort((a, b) => a.date > b.date) if file.path matches '/^photos/' %}
+{% for file in site.static|sort((a, b) => a.date|date('U') < b.date|date('U')) if file.path matches '/^photos/' %}
       <div>
         <a href="{{ url(file.path) }}"><img src="{{ url(file.path|resize(800)) }}" alt="{{ file.basename }}" loading="lazy"></a>
       </div>
