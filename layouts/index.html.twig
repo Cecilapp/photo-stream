@@ -8,7 +8,7 @@
     <base href="{{ url() }}">
     <link rel="canonical" href="{{ url() }}">
     <style>
-{% apply SCSStoCSS|minifyCSS %}
+{% apply scss_to_css|minify_css %}
       $background: #000;
       $color: #fff;
       $margin: 2px;
@@ -19,21 +19,21 @@
         color: $color;
         margin: $margin;
       }
-      main{
+      main {
         display: flex;
         flex-wrap: wrap;
       }
-      main::after{
+      main::after {
         content: '';
         flex-grow: 999999999;
       }
-      div{
+      div {
         flex-grow: 1;
         margin: $margin;
         background-color: $background;
         height: $height;
       }
-      img{
+      img {
         height: $height;
         object-fit: cover;
         max-width: 100%;
