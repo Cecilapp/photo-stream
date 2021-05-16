@@ -12,7 +12,5 @@ defaultpages:
     published: false
 static:
   load: true
-cache:
-  enabled: true
 postprocess:
   enabled: true
