@@ -4,7 +4,7 @@
 [build.environment]
   CECIL_ENV = "production"
   CECIL_CACHE_DIR = "/opt/build/cache/"
-  CECIL_CACHE_ENABLED = true
+  CECIL_CACHE_ENABLED = "true"
 
 [context.deploy-preview.environment]
   CECIL_ENV = "preview"
