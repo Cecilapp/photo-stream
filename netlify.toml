@@ -2,9 +2,9 @@
   publish = "_site"
   command = "chmod +x scripts/netlify-build.sh && bash scripts/netlify-build.sh"
 [build.environment]
-  PHP_VERSION = "7.2"
   CECIL_ENV = "production"
   CECIL_CACHE_DIR = "/opt/build/cache/"
+  CECIL_CACHE_ENABLED = true
 
 [context.deploy-preview.environment]
   CECIL_ENV = "preview"
