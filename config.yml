@@ -14,3 +14,14 @@ static:
   load: true
 postprocess:
   enabled: true
+metatags:
+  jsonld:
+    enabled: true
+assets:
+  images:
+    optimize:
+      enabled: true
+    responsive:
+      enabled: true
+    webp:
+      enabled: true
