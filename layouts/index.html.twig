@@ -35,6 +35,7 @@
       }
       img {
         height: $height;
+        width: 100%;
         object-fit: cover;
         max-width: 100%;
         min-width: 100%;
@@ -54,10 +55,14 @@
     <main>
       {%- for file in site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.date|date('U') < b.date|date('U')) ~%}
       <div>
-        <a href="{{ url(file.path) }}"><img src="{{ url(file.path|resize(800)) }}" alt="{{ file.basename }}" loading="lazy"></a>
+{% set image = asset(file.path) %}
+        <a href="{{ url(file.path) }}">
+          {#<img src="{{ image|url() }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ file.basename }}" loading="lazy">#}
+          {{ image|html({'alt': file.basename, 'loading': 'lazy'}) }}
+        </a>
       </div>
       {%- endfor ~%}
     </main>
-    <footer>Photos from <a href="{{ site.author.url }}">{{ site.author.name }}</a> - Powered by <a href="{{ cecil.url }}">Cecil</a></footer>
+    <footer>Photos from <a href="{{ url(site.author.url) }}">{{ site.author.name }}</a> - Powered by <a href="{{ cecil.url }}">Cecil</a></footer>
   </body>
 </html>
