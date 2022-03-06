@@ -1,13 +1,13 @@
 [build]
   publish = "_site"
-  command = "chmod +x scripts/netlify-build.sh && bash scripts/netlify-build.sh"
+  command = "bash scripts/netlify-build.sh"
+
 [build.environment]
-  CECIL_ENV = "production"
   CECIL_CACHE_DIR = "/opt/build/cache/"
   CECIL_CACHE_ENABLED = "true"
 
+[context.production.environment]
+  CECIL_ENV = "production"
+
 [context.deploy-preview.environment]
   CECIL_ENV = "preview"
-
-[context.branch-deploy.environment]
-  CECIL_ENV = "branch"
