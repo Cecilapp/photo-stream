@@ -12,8 +12,6 @@ defaultpages:
     published: false
 static:
   load: true
-postprocess:
-  enabled: true
 metatags:
   jsonld:
     enabled: true
@@ -22,6 +20,6 @@ assets:
     optimize:
       enabled: true
     responsive:
-      enabled: true
+      enabled: false
     webp:
       enabled: true
