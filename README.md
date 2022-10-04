@@ -2,6 +2,8 @@
 
 A Photo Stream static website, powered by [Cecil](https://cecil.app) (and [Unsplash](https://unsplash.com)).
 
+Demo: https://photo-stream.cecil.app
+
 ## Install
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Cecilapp/photo-stream)
