@@ -11,7 +11,7 @@ Demo: https://photo-stream.cecil.app
 ### Locally
 
 ```bash
-curl -LO <https://cecil.app/cecil.phar>
+curl -LO https://cecil.app/cecil.phar
 ```
 
 ## Usage
