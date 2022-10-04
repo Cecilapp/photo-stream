@@ -24,6 +24,7 @@
         margin: $margin;
         background-color: $background;
         height: $height;
+        position: relative;
       }
       #gallery img {
         height: $height;
@@ -39,18 +40,25 @@
         filter: alpha(opacity=100);
         opacity: 1;
       }
-      #gallery span.author {
-        position: relative;
-        bottom: 21px;
+      #gallery div.data {
+        position: absolute;
+        bottom: 0px;
         left: 0px;
-        opacity: .6
+        opacity: .6;
+        width: 100%;
+        font-size: small;
+        font-style: italic;
+        padding-left: .25rem
       }
-      #gallery span.author a {
+      #gallery div.data a {
         text-decoration: none;
       }
-      #gallery span.author:hover {
+      #gallery div.data:hover {
         opacity: 1;
         background-color: $background;
+      }
+      #gallery span.author {
+        font-style: normal;
       }
       {%- endblock css ~%}
 
@@ -66,14 +74,23 @@
           <a href="{{ url(file.path) }}" title="{{ photo.alt|default("Click to view this photo in full size"|trans) }}">
             {{ image|html({'alt': photo.alt|default(file.basename), 'loading': 'lazy'}) }}
           </a>
-          {%- if photo.author.name is defined ~%}
-          <span class="author">
-            {%- if photo.author.url is defined ~%}
-            <a href="{{ photo.author.url }}" title="{% trans %}Author's page{% endtrans %}">{{ photo.author.name }}</a>
-            {%- else ~%}
-            {{ photo.author.name }}
+          {%- if photo.alt is defined or photo.author.name is defined ~%}
+          <div class="data">
+            {%- if photo.alt is defined ~%}
+            <em>{{ photo.alt }}</em>
             {%- endif ~%}
-          </span>
+            {%- if photo.alt is defined and photo.author.name is defined %} &middot; {% endif ~%}
+            {%- if photo.author.name is defined ~%}
+            {%- set author -%}
+              {%- if photo.author.url is defined -%}
+                <a href="{{ photo.author.url }}" title="{% trans %}Author's page{% endtrans %}">{{ photo.author.name }}</a>
+              {%- else -%}
+                {{ photo.author.name }}
+              {%- endif -%}
+            {%- endset ~%}
+            <span class="author">{%- trans %}Credit: %author%{% endtrans ~%}</span>
+            {%- endif ~%}
+          </div>
           {%- endif ~%}
         </div>
         {%- set photo = '' -%}
