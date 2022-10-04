@@ -10,26 +10,26 @@
         content: '';
         flex-grow: 999999999;
       }
-      #gallery span.title {
-        z-index: 9999;
+      #gallery h1.title {
         position: fixed;
+        z-index: 1;
         margin: 0.5rem;
         font-size: x-large;
       }
-      #gallery span.title a {
+      #gallery h1.title a {
         text-decoration: none;
       }
       #gallery div.photo {
         flex-grow: 1;
-        margin: $margin;
-        background-color: $background;
-        height: $height;
         position: relative;
+        margin: $margin;
+        height: $height;
+        background-color: $background;
       }
       #gallery img {
+        object-fit: cover;
         height: $height;
         width: 100%;
-        object-fit: cover;
         max-width: 100%;
         min-width: 100%;
         vertical-align: bottom;
@@ -44,18 +44,20 @@
         position: absolute;
         bottom: 0px;
         left: 0px;
-        opacity: .6;
+        padding-left: .25rem;
+        margin-bottom: -0.2rem;
         width: 100%;
         font-size: small;
         font-style: italic;
-        padding-left: .25rem
+        background-color: $background;
+        opacity: .4;
+      }
+      #gallery div.data:hover {
+        background-color: $background;
+        opacity: 1;
       }
       #gallery div.data a {
         text-decoration: none;
-      }
-      #gallery div.data:hover {
-        opacity: 1;
-        background-color: $background;
       }
       #gallery span.author {
         font-style: normal;
@@ -64,14 +66,14 @@
 
       {%- block content ~%}
       <div id="gallery">
-        <span class="title"><a href="{{ url('/') }}" title="{{ site.description|default(site.title) }}">{{ site.title }}</a></span>
+        <h1 class="title"><a href="{{ url('/') }}" title="{{ site.description|default(site.title) }}">{{ site.title }}</a></h1>
         {%- for file in site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.date|date('U') < b.date|date('U')) ~%}
           {%- if site.data.photos[file.basename] is defined ~%}
             {%- set photo = site.data.photos[file.basename] -%}
           {%- endif ~%}
         <div class="photo">
           {%- set image = asset(file.path)|resize(600) ~%}
-          <a href="{{ url(file.path) }}" title="{{ photo.alt|default("Click to view this photo in full size"|trans) }}">
+          <a href="{{ url(file.path) }}" title="{{ "Click to view this photo in full size"|trans }}">
             {{ image|html({'alt': photo.alt|default(file.basename), 'loading': 'lazy'}) }}
           </a>
           {%- if photo.alt is defined or photo.author.name is defined ~%}
