@@ -58,18 +58,21 @@
       <div id="gallery">
         <span class="title"><a href="{{ url('/') }}" title="{{ site.description|default(site.title) }}">{{ site.title }}</a></span>
         {%- for file in site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.date|date('U') < b.date|date('U')) ~%}
-          {%- if site.data.photos[file.basename]|default ~%}
+          {%- if site.data.photos[file.basename] is defined ~%}
             {%- set photo = site.data.photos[file.basename] -%}
-            {%- set alt = photo.alt|default -%}
           {%- endif ~%}
         <div class="photo">
           {%- set image = asset(file.path)|resize(600) ~%}
-          <a href="{{ url(file.path) }}" title="{{ alt|default("Click to view this photo in full size"|trans) }}">
-            {{ image|html({'alt': alt|default(file.basename), 'loading': 'lazy'}) }}
+          <a href="{{ url(file.path) }}" title="{{ photo.alt|default("Click to view this photo in full size"|trans) }}">
+            {{ image|html({'alt': photo.alt|default(file.basename), 'loading': 'lazy'}) }}
           </a>
-          {%- if photo.author|default ~%}
+          {%- if photo.author.name is defined ~%}
           <span class="author">
+            {%- if photo.author.url is defined ~%}
             <a href="{{ photo.author.url }}" title="{% trans %}Author's page{% endtrans %}">{{ photo.author.name }}</a>
+            {%- else ~%}
+            {{ photo.author.name }}
+            {%- endif ~%}
           </span>
           {%- endif ~%}
         </div>
