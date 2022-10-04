@@ -8,9 +8,9 @@ A Photo Stream static website, powered by [Cecil](https://cecil.app) (and [Unspl
 
 ## Usage
 
-Just put photos in `static/photos`.
+Just drop photos in `static/photos`.
 
-You can add an alternative description and details about the author in the `data/photos.yaml` file:
+For each photo you can add an alternative description, and details about the author in the `data/photos.yaml` file:
 
 ```yaml
 <basename>:
