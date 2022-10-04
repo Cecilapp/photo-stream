@@ -71,8 +71,8 @@
           {%- if site.data.photos[file.basename] is defined ~%}
             {%- set photo = site.data.photos[file.basename] -%}
           {%- endif ~%}
-        <div class="photo">
           {%- set image = asset(file.path)|resize(600) ~%}
+        <div class="photo" style="background-color: {{ image|dominant_color }}">
           <a href="{{ url(file.path) }}" title="{{ "Click to view this photo in full size"|trans }}">
             {{ image|html({'alt': photo.alt|default(file.basename), 'loading': 'lazy'}) }}
           </a>
