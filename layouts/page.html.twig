@@ -9,6 +9,7 @@
     <link rel="canonical" href="{{ url('/', {canonical: true}) }}">
     <style>
       {%- apply scss_to_css|minify_css -%}
+      {%- block css -%}
       $background: #000;
       $color: #fff;
       $margin: 2px;
@@ -19,34 +20,6 @@
         color: $color;
         margin: $margin;
       }
-      main {
-        display: flex;
-        flex-wrap: wrap;
-      }
-      main::after {
-        content: '';
-        flex-grow: 999999999;
-      }
-      div {
-        flex-grow: 1;
-        margin: $margin;
-        background-color: $background;
-        height: $height;
-      }
-      img {
-        height: $height;
-        width: 100%;
-        object-fit: cover;
-        max-width: 100%;
-        min-width: 100%;
-        vertical-align: bottom;
-      }
-      span.author {
-        position: relative;
-        bottom: 21px;
-        left: 0px;
-        background-color: #000;
-      }
       a {
         color: $color;
       }
@@ -54,6 +27,7 @@
         margin: 10px;
         text-align: right;
       }
+      {%- endblock css -%}
       {%- endapply -%}
     </style>
   </head>
