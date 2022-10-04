@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-04 15:26+0200\n"
-"PO-Revision-Date: 2022-10-04 15:26+0200\n"
+"POT-Creation-Date: 2022-10-04 15:32+0200\n"
+"PO-Revision-Date: 2022-10-04 15:32+0200\n"
 "Last-Translator: Arnaud Ligny <arnaud@ligny.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -14,11 +14,11 @@ msgstr ""
 "X-Poedit-Basepath: ../layouts\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: index.html.twig:68
+#: index.html.twig:67
 msgid "Click to view this photo in full size"
 msgstr "Cliquez pour voir cette photo en taille réelle"
 
-#: index.html.twig:73
+#: index.html.twig:72
 msgid "Author's page"
 msgstr "Page de l’auteur"
 
