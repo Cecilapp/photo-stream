@@ -8,11 +8,27 @@ Demo: https://photo-stream.cecil.app
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Cecilapp/photo-stream)
 
+### Locally
+
+```bash
+curl -LO <https://cecil.app/cecil.phar>
+```
+
 ## Usage
 
-Just drop photos in `static/photos`.
+### Build and serve locally
 
-For each photo you can add an alternative description, and details about the author, through the `data/photos.yaml` file:
+```bash
+php cecil.phar serve -v
+```
+
+### Add photos
+
+Just drop files in the `static/photos` directory.
+
+### Alternative text and author
+
+For each photo you can add an alternative text, and details about the author, through the [`data/photos.yaml`](data/photos.yaml) file:
 
 ```yaml
 <file basename>:
@@ -21,6 +37,25 @@ For each photo you can add an alternative description, and details about the aut
     name: <author name>
     url: <author URL>
 ```
+
+### Localize
+
+You can easily localize _Photo Stream_ in your language.
+
+#### Configuration
+
+`config.yml`:
+
+```yaml
+language: <language_code> # e.g.: fr
+languages:
+  - code: <language_code>
+    locale: <locale_code> # e.g.: fr
+```
+
+#### Translation
+
+Copy `translations.en.yaml` to `translations.<language_code>.yaml` then translate each key.
 
 ## License
 
