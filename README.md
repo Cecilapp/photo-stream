@@ -10,14 +10,14 @@ A Photo Stream static website, powered by [Cecil](https://cecil.app) (and [Unspl
 
 Just drop photos in `static/photos`.
 
-For each photo you can add an alternative description, and details about the author in the `data/photos.yaml` file:
+For each photo you can add an alternative description, and details about the author, through the `data/photos.yaml` file:
 
 ```yaml
-<basename>:
-  alt: "Alternative description."
+<file basename>:
+  alt: "<alternative description>"
   author:
-    name: <Author name>
-    url: <Author URL>
+    name: <author name>
+    url: <author URL>
 ```
 
 ## License
