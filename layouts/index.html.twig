@@ -2,9 +2,10 @@
 
       {%- block content ~%}
       {%- for file in site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.date|date('U') < b.date|date('U')) ~%}
+        {%- set alt = file.basename -%}
         {%- if site.data.photos[file.basename]|default ~%}
           {%- set photo = site.data.photos[file.basename] -%}
-          {%- set alt = photo.alt|default(file.basename) -%}
+          {%- set alt = photo.alt|default(alt) -%}
         {%- endif ~%}
       <div>
         {%- set image = asset(file.path)|resize(600) ~%}
@@ -13,7 +14,7 @@
         </a>
         {%- if photo.author|default ~%}
         <span class="author">
-          <a href="https://unsplash.com/@{{ photo.author.handle }}">{{ photo.author.name }}</a>
+          <a href="{{ site.author.root }}{{ photo.author.handle }}">{{ photo.author.name }}</a>
         </span>
         {%- endif ~%}
       </div>
