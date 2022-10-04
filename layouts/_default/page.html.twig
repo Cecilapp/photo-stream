@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="{{ site.language }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>{{ site.title }}</title>
+    <meta name="description" content="{{ site.description }}" />
+    <base href="{{ url('/') }}">
+    <link rel="canonical" href="{{ url('/', {canonical: true}) }}">
+    <style>
+      {%- apply scss_to_css|minify_css -%}
+      {%- block css -%}
+      $background: #000;
+      $color: #fff;
+      $margin: 2px;
+      $height: 300px;
+      body {
+        font: 16px/24px -apple-system, Roboto, Helvetica, Arial, sans-serif;
+        background: $background;
+        color: $color;
+        margin: $margin;
+      }
+      a {
+        color: $color;
+      }
+      footer {
+        margin: 10px;
+        text-align: right;
+      }
+      {%- endblock css -%}
+      {%- endapply -%}
+    </style>
+  </head>
+  <body>
+    <main>
+      {%- block content ~%}
+      {{ page.content }}
+      {%- endblock ~%}
+    </main>
+    <footer>
+      {%- set author -%}
+      <a href="{{ url(site.author.url) }}">{{ site.author.name }}</a>
+      {%- endset -%}
+      {%- set powered_by -%}
+      <a href="{{ cecil.url }}">Cecil</a>
+      {%- endset ~%}
+      {% trans %}Photos from %author%{% endtrans %} - {% trans %}Powered by %powered_by%{% endtrans ~%}
+    </footer>
+  </body>
+</html>
