@@ -1,75 +1,22 @@
-<!DOCTYPE html>
-<html lang="{{ site.language }}">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>{{ site.title }}</title>
-    <meta name="description" content="{{ site.description }}" />
-    <base href="{{ url('/') }}">
-    <link rel="canonical" href="{{ url('/', {canonical: true}) }}">
-    <style>
-      {%- apply scss_to_css|minify_css -%}
-      $background: #000;
-      $color: #fff;
-      $margin: 2px;
-      $height: 300px;
-      body {
-        font: 16px/24px -apple-system, Roboto, Helvetica, Arial, sans-serif;
-        background: $background;
-        color: $color;
-        margin: $margin;
-      }
-      main {
-        display: flex;
-        flex-wrap: wrap;
-      }
-      main::after {
-        content: '';
-        flex-grow: 999999999;
-      }
-      div {
-        flex-grow: 1;
-        margin: $margin;
-        background-color: $background;
-        height: $height;
-      }
-      img {
-        height: $height;
-        width: 100%;
-        object-fit: cover;
-        max-width: 100%;
-        min-width: 100%;
-        vertical-align: bottom;
-      }
-      a {
-        color: $color;
-      }
-      footer {
-        margin: 10px;
-        text-align: right;
-      }
-      {%- endapply -%}
-    </style>
-  </head>
-  <body>
-    <main>
+{% extends 'page.html.twig' %}
+
+      {%- block content ~%}
       {%- for file in site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.date|date('U') < b.date|date('U')) ~%}
+        {%- if site.data.photos[file.basename]|default ~%}
+          {%- set photo = site.data.photos[file.basename] -%}
+          {%- set alt = photo|default(file.basename) -%}
+        {%- endif ~%}
       <div>
         {%- set image = asset(file.path)|resize(600) ~%}
         <a href="{{ url(file.path) }}">
-          {{ image|html({'alt': file.basename, 'loading': 'lazy'}) }}
+          {{ image|html({'alt': alt, 'loading': 'lazy'}) }}
         </a>
+        {%- if photo.author|default ~%}
+        <span class="author">
+          <a href="https://unsplash.com/@{{ photo.author.handle }}">{{ photo.author.name }}</a>
+        </span>
+        {%- endif ~%}
       </div>
+      {%- set photo = '' -%}
       {%- endfor ~%}
-    </main>
-    <footer>
-      {%- set author -%}
-      <a href="{{ url(site.author.url) }}">{{ site.author.name }}</a>
-      {%- endset -%}
-      {%- set powered_by -%}
-      <a href="{{ cecil.url }}">Cecil</a>
-      {%- endset ~%}
-      {% trans %}Photos from %author%{% endtrans %} - {% trans %}Powered by %powered_by%{% endtrans ~%}
-    </footer>
-  </body>
-</html>
+      {%- endblock ~%}
