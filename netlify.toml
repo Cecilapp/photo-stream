@@ -1,10 +1,11 @@
 [build]
   publish = "_site"
-  command = "bash scripts/netlify-build.sh"
+  #command = "bash scripts/netlify-build.sh"
+  command = "curl -sSOL https://cecil.app/build.sh && bash ./build.sh"
 
 [build.environment]
-  CECIL_CACHE_DIR = "/opt/build/cache/"
-  CECIL_CACHE_ENABLED = "true"
+  #CECIL_CACHE_DIR = "/opt/build/cache/"
+  #CECIL_CACHE_ENABLED = "true"
 
 [context.production.environment]
   CECIL_ENV = "production"
