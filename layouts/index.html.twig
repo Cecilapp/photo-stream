@@ -69,7 +69,7 @@
           </a>
           {%- if photo.author|default ~%}
           <span class="author">
-            <a href="{{ site.author.root }}{{ photo.author.handle }}" title="{% trans %}Author's page{% endtrans %}">{{ photo.author.name }}</a>
+            <a href="{{ photo.author.url }}" title="{% trans %}Author's page{% endtrans %}">{{ photo.author.name }}</a>
           </span>
           {%- endif ~%}
         </div>
