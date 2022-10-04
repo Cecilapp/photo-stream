@@ -1,6 +1,6 @@
 # Photo Stream
 
-A photo stream static website, powered by [Cecil](https://cecil.app).
+A photo stream static website, powered by [Cecil](https://cecil.app) and [Unsplash](https://unsplash.com).
 
 ## Install
 
@@ -8,7 +8,17 @@ A photo stream static website, powered by [Cecil](https://cecil.app).
 
 ## Usage
 
-Just put your photos in `static/photos`.
+Just put photos in `static/photos`.
+
+You can add an alternative description and details about the author in the `data/photos.yaml` file:
+
+```yaml
+<basename>:
+  alt: "Alternatove description."
+  author:
+    name: <Author name>
+    handle: <Author Unsplash handle>
+```
 
 ## License
 
