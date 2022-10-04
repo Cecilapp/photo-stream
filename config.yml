@@ -1,5 +1,5 @@
-title: "Photo Stream"
-description: "Super simple photo stream, powered by Cecil"
+title: "Cecil Photo Stream"
+description: "Super simple photo stream, powered by Cecil."
 baseurl: "https://photo-stream.cecil.app/"
 author:
   name: Unsplash
