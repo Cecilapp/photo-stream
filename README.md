@@ -4,7 +4,7 @@ A photo stream static website, powered by [Cecil](https://cecil.app) and [Unspla
 
 ## Install
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Cecilapp/photo-stream&stack=cms)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Cecilapp/photo-stream)
 
 ## Usage
 
