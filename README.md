@@ -1,6 +1,6 @@
 # Photo Stream
 
-A photo stream static website, powered by [Cecil](https://cecil.app) and [Unsplash](https://unsplash.com).
+A Photo Stream static website, powered by [Cecil](https://cecil.app) (and [Unsplash](https://unsplash.com)).
 
 ## Install
 
@@ -14,10 +14,10 @@ You can add an alternative description and details about the author in the `data
 
 ```yaml
 <basename>:
-  alt: "Alternatove description."
+  alt: "Alternative description."
   author:
     name: <Author name>
-    handle: <Author Unsplash handle>
+    url: <Author URL>
 ```
 
 ## License
