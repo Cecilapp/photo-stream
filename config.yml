@@ -20,6 +20,6 @@ assets:
     optimize:
       enabled: true
     responsive:
-      enabled: false
+      enabled: true
     webp:
       enabled: true
