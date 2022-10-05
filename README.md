@@ -26,12 +26,13 @@ php cecil.phar serve -v
 
 Just drop files in the `static/photos` directory.
 
-### Alternative text and author
+### Add details (optional)
 
-For each photo you can add an alternative text, and details about the author, through the [`data/photos.yaml`](data/photos.yaml) file:
+For each photo you can add a title, an alternative text and the author name/URL, through the [`data/photos.yaml`](data/photos.yaml) file:
 
 ```yaml
 <file basename>:
+  title: "<photo title>"
   alt: "<alternative description>"
   author:
     name: <author name>
