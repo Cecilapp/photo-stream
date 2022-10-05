@@ -6,6 +6,8 @@ Demo: https://photo-stream.cecil.app
 
 ## Install
 
+### With Netlify
+
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Cecilapp/photo-stream)
 
 ### Locally
@@ -33,13 +35,13 @@ For each photo you can add a title, an alternative text and the author name/URL,
 ```yaml
 <file basename>:
   title: "<photo title>"
-  alt: "<alternative description>"
+  alt: "<alternative text>"
   author:
     name: <author name>
     url: <author URL>
 ```
 
-### Localize
+### Localize (optional)
 
 You can easily localize _Photo Stream_ in your language.
 
