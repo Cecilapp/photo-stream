@@ -8,7 +8,7 @@
     <base href="{{ url('/') }}">
     <link rel="canonical" href="{{ url('/', {canonical: true}) }}">
     <style>
-      {%- apply scss_to_css|minify_css -%}
+      {% apply scss_to_css|minify_css -%}
       {%- block css -%}
       $background: #000;
       $color: #fff;
@@ -28,7 +28,7 @@
         text-align: right;
       }
       {%- endblock css -%}
-      {%- endapply -%}
+      {%- endapply ~%}
     </style>
   </head>
   <body>
