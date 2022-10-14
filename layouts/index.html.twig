@@ -73,9 +73,7 @@
           {%- endif ~%}
           {%- set image = asset(file.path)|resize(640) ~%}
         <div class="photo" style="background-color: {{ image|dominant_color }}">
-          {%- set alt = photo.alt|default(photo.title|default) -%}
-          {%- set attributes = {} -%}
-          {%- if alt is not empty %}{% set attributes = attributes|merge({'alt': alt}) %}{% endif ~%}
+          {%- set attributes = {'alt': photo.alt|default(photo.title|default)} -%}
           {%- if loop.index > 10 %}{% set attributes = attributes|merge({'loading': 'lazy'}) %}{% endif ~%}
           <a href="{{ url(file.path) }}" title="{{ "Click to view this photo in full size"|trans }}">
             {{ image|html(attributes) }}
