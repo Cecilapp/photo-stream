@@ -2,7 +2,7 @@
 
 A Photo Stream static website, powered by [Cecil](https://cecil.app) (and [Unsplash](https://unsplash.com)).
 
-Demo: https://photo-stream.cecil.app
+Demo: https://photo-stream-demo.cecil.app
 
 ## Install
 
