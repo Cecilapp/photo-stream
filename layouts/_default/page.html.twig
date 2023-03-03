@@ -21,8 +21,10 @@
         color: $color;
       }
       footer {
-        margin: 10px;
-        text-align: right;
+        display: flex;
+        margin: 0.5rem;
+        align-items: center;
+        justify-content: space-between
       }
       {%- endblock css -%}
       {%- endapply ~%}
@@ -46,9 +48,9 @@
         {%- endset -%}
       {%- endif -%}
       {%- set powered_by -%}
-      <a href="https://photo-stream.cecil.app">Photo Stream</a> &amp; <a href="{{ cecil.url }}">Cecil</a>
+      <a href="{{ cecil.url }}">Cecil</a> <a href="https://photo-stream.cecil.app">Photo Stream</a>
       {%- endset ~%}
-      {% if author|default %}{% trans %}Photos from %author%{% endtrans %} - {% endif %}{% trans %}Powered by %powered_by%{% endtrans ~%}
+      {% if author|default %}{% trans %}<div>Photos from %author%{% endtrans %}</div> {% endif %}<div>{% trans %}Powered by %powered_by%{% endtrans ~%}</div>
     </footer>
   </body>
 </html>
