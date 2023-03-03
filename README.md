@@ -66,4 +66,6 @@ _Photo Stream_ is a free software distributed under the terms of the [MIT licens
 
 Photos under the [Unsplash license](https://unsplash.com/license).
 
+[JS Lightbox](https://fslightbox.com/) under the terms of the MIT license.
+
 © [Arnaud Ligny](https://arnaudligny.fr)

@@ -75,7 +75,7 @@
         <div class="photo" style="background-color: {{ image|dominant_color }}">
           {%- set attributes = {'alt': photo.alt|default(photo.title|default)} -%}
           {%- if loop.index > 10 %}{% set attributes = attributes|merge({'loading': 'lazy'}) %}{% endif ~%}
-          <a href="{{ url(file.path) }}" title="{{ "Click to view this photo in full size"|trans }}">
+          <a data-fslightbox="gallery" href="{{ url(file.path) }}" title="{{ "Click to view this photo in full size"|trans }}">
             {{ image|html(attributes) }}
           </a>
           {%- if photo.title is defined or photo.author.name is defined ~%}
@@ -100,4 +100,5 @@
         {%- set photo = '' -%}
         {%- endfor ~%}
       </div>
+      <script src="{{ asset('js/fslightbox.js') }}"></script>
       {%- endblock ~%}
