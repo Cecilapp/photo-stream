@@ -5,6 +5,14 @@ _Photo Stream_ is a self hosted static website for your photos, with really good
 Demo: <https://photo-stream-demo.cecil.app>  
 (hosted by [Netlify](https://www.netlify.com) and feeded by [Unsplash](https://unsplash.com))
 
+## Features
+
+- Responsives images & mobile friendly
+- Images files optimized and lazy loaded
+- Background filled with the dominant color
+- Keyboard navigation
+- Drag, drop and commit
+
 ## Install
 
 First you should clone or download the [Git repository](https://github.com/Cecilapp/photo-stream.git), then download Cecil in it:
@@ -18,12 +26,12 @@ curl -LO https://cecil.app/cecil.phar
 ### Preview locally
 
 ```bash
-php cecil.phar serve -v
+php cecil.phar serve -v --open
 ```
 
 ### Add photos
 
-Just drop files in the `static/photos` directory.
+Just drop image files in the `static/photos` directory.
 
 ### Add details (optional)
 
@@ -55,7 +63,7 @@ languages:
 
 #### Add translations
 
-Copy `translations.en.yaml` to `translations.<language_code>.yaml` then translate each key.
+In the `translations` directory, copy `translations.en.yaml` to `translations.<language_code>.yaml` then translate each key.
 
 ## Deploy
 
@@ -65,9 +73,9 @@ First build the website:
 php cecil.phar build -v
 ```
 
-Then copy the `_site` on your favorite Web server.
+Then copy generated files from `_site` to your Web server.
 
-### With Netlify
+Or try [Netlify](https://www.netlify.com):
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Cecilapp/photo-stream)
 
