@@ -1,3 +1,5 @@
+{% set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.date|date('U') < b.date|date('U')) %}
+{% set image = files|first.path %}
 {% extends '_default/page.html.twig' %}
 
       {%- block css ~%}
@@ -67,7 +69,7 @@
       {%- block content ~%}
       <div id="gallery">
         <h1 class="title"><a href="{{ url('/') }}" title="{{ site.description|default(site.title) }}">{{ site.title }}</a></h1>
-        {%- for file in site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.date|date('U') < b.date|date('U')) ~%}
+        {%- for file in files ~%}
           {%- if site.data.photos[file.basename] is defined ~%}
             {%- set photo = site.data.photos[file.basename] -%}
           {%- endif ~%}
