@@ -11,7 +11,7 @@ Demo: <https://photo-stream-demo.cecil.app>
 - Images files optimized and lazy loaded
 - Background filled with the dominant color
 - Keyboard navigation
-- Drag, drop and commit
+- Simple workflow: drag & drop and commit
 
 ## Install
 
