@@ -3,10 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>{{ site.title }}</title>
-    <meta name="description" content="{{ site.description }}" />
-    <base href="{{ url('/') }}">
-    <link rel="canonical" href="{{ url('/', {canonical: true}) }}">
+    {%~ include 'partials/metatags.html.twig' ~%}
     <style>
       {% apply scss_to_css|minify_css -%}
       {%- block css -%}
@@ -38,13 +35,20 @@
       {%- endblock ~%}
     </main>
     <footer>
-      {%- set author -%}
-      <a href="{{ url(site.author.url) }}">{{ site.author.name }}</a>
-      {%- endset -%}
+      {%- if site.author.name|default -%}
+        {%- set author -%}
+        {{ site.author.name }}
+        {%- endset -%}
+      {%- endif -%}
+      {%- if site.author.name|default and site.author.url|default -%}
+        {%- set author -%}
+        <a href="{{ url(site.author.url) }}">{{ site.author.name }}</a>
+        {%- endset -%}
+      {%- endif -%}
       {%- set powered_by -%}
-      <a href="{{ cecil.url }}">Cecil</a>
+      <a href="https://photo-stream.cecil.app">Photo Stream</a> &amp; <a href="{{ cecil.url }}">Cecil</a>
       {%- endset ~%}
-      {% trans %}Photos from %author%{% endtrans %} - {% trans %}Powered by %powered_by%{% endtrans ~%}
+      {% if author|default %}{% trans %}Photos from %author%{% endtrans %} - {% endif %}{% trans %}Powered by %powered_by%{% endtrans ~%}
     </footer>
   </body>
 </html>
