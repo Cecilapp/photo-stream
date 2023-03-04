@@ -7,10 +7,10 @@
     <style>
       {% apply scss_to_css|minify_css -%}
       {%- block css -%}
-      $background: #000;
-      $color: #fff;
-      $margin: 2px;
-      $height: 300px;
+      $background: {{ site.style.colors.background }};
+      $color: {{ site.style.colors.text }};
+      $height: {{ site.style.photos.height }};
+      $margin: {{ site.style.photos.margin }};
       body {
         font: 16px/24px -apple-system, Roboto, Helvetica, Arial, sans-serif;
         background: $background;
@@ -24,7 +24,7 @@
         display: flex;
         margin: 0.5rem;
         align-items: center;
-        justify-content: space-between
+        justify-content: space-between;
       }
       {%- endblock css -%}
       {%- endapply ~%}
