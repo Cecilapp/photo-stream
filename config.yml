@@ -5,10 +5,10 @@ author:
   name: Unsplash
   url: https://unsplash.com/s/photos/open-source
 style:
-  colors:
+  color:
     background: "#000"
     text: "#FFF"
-  photos:
+  photo:
     height: 300px
     margin: 2px
 # Cecil
