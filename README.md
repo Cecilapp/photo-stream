@@ -23,12 +23,6 @@ curl -LO https://cecil.app/cecil.phar
 
 ## Usage
 
-### Preview locally
-
-```bash
-php cecil.phar serve -v --open
-```
-
 ### Add photos
 
 Just drop image files in the `static/photos` directory.
@@ -44,6 +38,16 @@ For each photo you can add a title, an alternative text and the author name/URL,
   author:
     name: <author name>
     url: <author URL>
+```
+
+### Configuration
+
+You can define title, baseurl, author and colors, etc. by editing [`config.yml`](config.yml) file.
+
+### Preview locally
+
+```bash
+php cecil.phar serve -v --open
 ```
 
 ### Localize
