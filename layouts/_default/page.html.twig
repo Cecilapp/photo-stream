@@ -7,10 +7,10 @@
     <style>
       {% apply scss_to_css|minify_css -%}
       {%- block css -%}
-      $background: {{ site.style.colors.background }};
-      $color: {{ site.style.colors.text }};
-      $height: {{ site.style.photos.height }};
-      $margin: {{ site.style.photos.margin }};
+      $background: {{ site.style.color.background }};
+      $color: {{ site.style.color.text }};
+      $height: {{ site.style.photo.height }};
+      $margin: {{ site.style.photo.margin }};
       body {
         font: 16px/24px -apple-system, Roboto, Helvetica, Arial, sans-serif;
         background: $background;
