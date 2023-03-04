@@ -4,7 +4,14 @@ baseurl: https://photo-stream-demo.cecil.app/
 author:
   name: Unsplash
   url: https://unsplash.com/s/photos/open-source
-
+style:
+  colors:
+    background: "#000"
+    text: "#FFF"
+  photos:
+    height: 300px
+    margin: 2px
+# Cecil
 output:
   pagetypeformats:
     homepage: html
