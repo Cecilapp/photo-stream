@@ -42,7 +42,7 @@ For each photo you can add a title, an alternative text and the author name/URL,
 
 ### Configuration
 
-You can define title, baseurl, author and colors, etc. by editing [`config.yml`](config.yml) file.
+You can define gallery title, baseurl, author, colors, thumbnails size, sort, etc. by editing [`config.yml`](config.yml) file.
 
 ### Preview locally
 

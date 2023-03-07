@@ -1,4 +1,8 @@
-{% set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.date|date('U') < b.date|date('U')) %}
+{% if site.photos.sort == 'desc'|default('desc') %}
+  {%- set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.exif.DateTimeOriginal|default(a.date)|date('U') < b.exif.DateTimeOriginal|default(b.date)|date('U')) %}
+{% else %}
+  {%- set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.exif.DateTimeOriginal|default(a.date)|date('U') > b.exif.DateTimeOriginal|default(b.date)|date('U')) %}
+{% endif %}
 {% set image = files|first.path %}
 {% extends '_default/page.html.twig' %}
 
@@ -79,11 +83,11 @@
           {%- if site.data.photos[file.basename] is defined ~%}
             {%- set photo = site.data.photos[file.basename] -%}
           {%- endif ~%}
-          {%- set image = asset(file.path)|resize(site.photo.size.thumbnail) ~%}
+          {%- set image = asset(file.path)|resize(site.photos.size.thumbnail) ~%}
         <div class="photo" style="background-color: {{ image|dominant_color }}">
           {%- set attributes = {'alt': photo.alt|default(photo.title|default)} -%}
           {%- if loop.index > 10 %}{% set attributes = attributes|merge({'loading': 'lazy'}) %}{% endif ~%}
-          <a data-fslightbox="gallery" href="{{ url(asset(file.path)|resize(site.photo.size.full)) }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
+          <a data-fslightbox="gallery" href="{{ url(asset(file.path)|resize(site.photos.size.full)) }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
             {{ image|html(attributes) }}
           </a>
           {%- if photo.title is defined or photo.author.name is defined ~%}
