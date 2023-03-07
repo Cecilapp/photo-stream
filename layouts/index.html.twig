@@ -17,9 +17,15 @@
         z-index: 1;
         margin: 0.5rem;
         font-size: x-large;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
       #gallery h1.title a {
         text-decoration: none;
+      }
+      #gallery h1.title a:hover {
+        -webkit-font-smoothing: auto;
+        -moz-osx-font-smoothing: auto;
       }
       #gallery div.photo {
         flex-grow: 1;
