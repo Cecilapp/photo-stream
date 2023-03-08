@@ -50,7 +50,7 @@
       {%- set powered_by -%}
       <a href="{{ cecil.url }}">Cecil</a> <a href="https://photo-stream.cecil.app">Photo Stream</a>
       {%- endset ~%}
-      {% if author|default %}{% trans %}<div>Photos from %author%{% endtrans %}</div> {% endif %}<div>{% trans %}Powered by %powered_by%{% endtrans ~%}</div>
+      {% if author|default %}<div>{% trans %}Photos from %author%{% endtrans %}</div> {% endif %}<div>{% trans %}Powered by %powered_by%{% endtrans ~%}</div>
     </footer>
   </body>
 </html>
