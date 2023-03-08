@@ -1,6 +1,6 @@
 {% set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.exif.DateTimeOriginal|default(a.date)|date('U') <=> b.exif.DateTimeOriginal|default(b.date)|date('U')) %}
 {% if site.photos.sort == 'desc'|default('asc') %}
-	{%- set files = files|reverse %}
+  {%- set files = files|reverse %}
 {% endif %}
 {% set image = files|first.path %}
 {% extends '_default/page.html.twig' %}
@@ -44,12 +44,14 @@
         max-width: 100%;
         min-width: 100%;
         vertical-align: bottom;
-        filter: alpha(opacity=80);
-        opacity: 0.8;
+      {%- if site.style.photo.opacity|default(95) < 100 ~%}
+        filter: alpha(opacity={{ site.style.photo.opacity|default(95) }});
+        opacity: {{ site.style.photo.opacity|default(95) / 100 }};
       }
       #gallery img:hover {
         filter: alpha(opacity=100);
         opacity: 1;
+      {%- endif ~%}
       }
       #gallery div.data {
         position: absolute;
@@ -82,11 +84,11 @@
           {%- if site.data.photos[file.basename] is defined ~%}
             {%- set photo = site.data.photos[file.basename] -%}
           {%- endif ~%}
-          {%- set image = asset(file.path)|resize(site.photos.size.thumbnail) ~%}
+          {%- set image = asset(file.path)|resize(site.photos.size.thumbnail|default(640)) ~%}
         <div class="photo" style="background-color: {{ image|dominant_color }}">
           {%- set attributes = {'alt': photo.alt|default(photo.title|default)} -%}
           {%- if loop.index > 10 %}{% set attributes = attributes|merge({'loading': 'lazy'}) %}{% endif ~%}
-          <a data-fslightbox="gallery" href="{{ url(asset(file.path)|resize(site.photos.size.full)) }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
+          <a data-fslightbox="gallery" href="{{ url(asset(file.path)|resize(site.photos.size.full|default(1920))) }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
             {{ image|html(attributes) }}
           </a>
           {%- if photo.title is defined or photo.author.name is defined ~%}
