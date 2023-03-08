@@ -2,8 +2,7 @@
 
 _Photo Stream_ is a self hosted static website for your photos, with really goods loading performances, powered by [Cecil](https://cecil.app).
 
-Demo: <https://photo-stream-demo.cecil.app>  
-(hosted by [Netlify](https://www.netlify.com) and feeded by [Unsplash](https://unsplash.com))
+Demo: <https://photo-stream-demo.cecil.app> (hosted by [Netlify](https://www.netlify.com) and fed by [Unsplash](https://unsplash.com)).
 
 ## Features
 
