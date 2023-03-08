@@ -15,7 +15,11 @@ Demo: <https://photo-stream-demo.cecil.app>
 
 ## Install
 
-First you should clone or download the [Git repository](https://github.com/Cecilapp/photo-stream.git), then download Cecil in it:
+> PHP 7.4+ and [Cecil](https://cecil.app/download/) 7.31+ are required.
+
+First you should clone or download the [Git repository](https://github.com/Cecilapp/photo-stream.git).
+
+The repository come with a default version of `cecil.phar`, so you can you use it immediately, or you can download the latest release throught the following command:
 
 ```bash
 curl -LO https://cecil.app/cecil.phar
@@ -45,6 +49,13 @@ For each photo you can add a title, an alternative text and the author name/URL,
 You can define gallery title, baseurl, author, colors, thumbnails size, sort, etc. by editing [`config.yml`](config.yml) file.
 
 ### Preview locally
+
+You can double-click on the command shortcut:
+
+- _preview.command_ on macOS
+- _preview.cmd_ on Windows
+
+Or run the following command in your terminal:
 
 ```bash
 php cecil.phar serve -v --open
@@ -89,6 +100,6 @@ _Photo Stream_ is a free software distributed under the terms of the [MIT licens
 
 [JS Lightbox](https://fslightbox.com/) is under the terms of the MIT license.
 
-Photos are under the [Unsplash license](https://unsplash.com/license).
+Photos from the demo are under the [Unsplash license](https://unsplash.com/license).
 
 © [Arnaud Ligny](https://arnaudligny.fr)
