@@ -14,7 +14,7 @@ style:
     height: 300px
     margin: 2px
 photos:
-  sort: desc
+  sort: asc
   size:
     thumbnail: 640
     full: 1920
