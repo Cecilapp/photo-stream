@@ -5,7 +5,6 @@ author:
   name: Unsplash
   url: https://unsplash.com/s/photos/open-source
 
-# Default
 style:
   color:
     background: "#000"
@@ -19,7 +18,6 @@ photos:
     thumbnail: 640
     full: 1920
 
-# Cecil
 output:
   pagetypeformats:
     homepage: html
