@@ -1,7 +1,6 @@
-{% if site.photos.sort == 'desc'|default('desc') %}
-  {%- set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.exif.DateTimeOriginal|default(a.date)|date('U') < b.exif.DateTimeOriginal|default(b.date)|date('U')) %}
-{% else %}
-  {%- set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.exif.DateTimeOriginal|default(a.date)|date('U') > b.exif.DateTimeOriginal|default(b.date)|date('U')) %}
+{% set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.exif.DateTimeOriginal|default(a.date)|date('U') <=> b.exif.DateTimeOriginal|default(b.date)|date('U')) %}
+{% if site.photos.sort == 'desc'|default('asc') %}
+	{%- set files = files|reverse %}
 {% endif %}
 {% set image = files|first.path %}
 {% extends '_default/page.html.twig' %}
