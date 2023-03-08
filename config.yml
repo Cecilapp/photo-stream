@@ -7,11 +7,12 @@ author:
 
 style:
   color:
-    background: "#000"
-    text: "#FFF"
+    background: "black"
+    text: "white"
   photo:
     height: 300px
     margin: 2px
+    opacity: 95
 photos:
   sort: asc
   size:
