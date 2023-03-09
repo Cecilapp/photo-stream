@@ -44,14 +44,10 @@
         max-width: 100%;
         min-width: 100%;
         vertical-align: bottom;
-      {%- if site.style.photo.opacity|default(95) < 100 ~%}
-        filter: alpha(opacity={{ site.style.photo.opacity|default(95) }});
-        opacity: {{ site.style.photo.opacity|default(95) / 100 }};
       }
       #gallery img:hover {
-        filter: alpha(opacity=100);
-        opacity: 1;
-      {%- endif ~%}
+        filter: brightness(115%);
+        transition: filter .25s ease-out;
       }
       #gallery div.data {
         position: absolute;
@@ -68,6 +64,7 @@
       #gallery div.data:hover {
         background-color: $background;
         opacity: 1;
+        transition: opacity .5s ease-out;
       }
       #gallery div.data a {
         text-decoration: none;

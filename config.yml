@@ -12,7 +12,6 @@ style:
   photo:
     height: 300px
     margin: 2px
-    opacity: 95
 photos:
   sort: asc
   size:
