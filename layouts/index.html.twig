@@ -89,7 +89,7 @@
           {%- set attributes = {'alt': photo.alt|default(photo.title|default)} -%}
           {%- if loop.index > 10 %}{% set attributes = attributes|merge({loading: 'lazy'}) %}{% endif ~%}
           <a data-fslightbox="gallery" href="{{ url(asset(file.path)|resize(site.photos.size.full|default(1920))) }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
-            {{ image|html(attributes) }}
+            {{ image|html(attributes|merge({decoding: 'async'})) }}
           </a>
           {%- if photo.title is defined or photo.author.name is defined ~%}
           <div class="data">
