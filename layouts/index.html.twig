@@ -4,7 +4,6 @@
 {% endif %}
 {% set image = files|first.path %}
 {% extends '_default/page.html.twig' %}
-
       {%- block css ~%}
       {{ parent() }}
       div#gallery {
@@ -50,7 +49,7 @@
         filter: brightness(115%);
         transition: filter .25s ease-out;
       }
-      #gallery div.data {
+      #gallery div.caption {
         position: absolute;
         bottom: 0px;
         left: 0px;
@@ -62,19 +61,23 @@
         background-color: $background;
         opacity: .4;
       }
-      #gallery div.data:hover {
+      #gallery div.caption:hover {
         background-color: $background;
         opacity: 1;
         transition: opacity .5s ease-out;
       }
-      #gallery div.data a {
+      #gallery div.caption a {
         text-decoration: none;
       }
-      #gallery span.author {
+      #gallery div.caption span.author {
         font-style: normal;
       }
       {%- endblock css ~%}
-
+    {%- block head ~%}
+    {{- parent() ~}}
+    <link rel="stylesheet" href="{{ asset('photoswipe/photoswipe.css') }}">
+    <link rel="stylesheet" href="{{ asset('photoswipe/photoswipe-dynamic-caption-plugin.css') }}">
+    {%- endblock head ~%}
       {%- block content ~%}
       <div id="gallery">
         <h1 class="title"><a href="{{ url('/') }}" title="{{ site.description|default(site.title) }}">{{ site.title }}</a></h1>
@@ -82,15 +85,16 @@
           {%- if site.data.photos[file.basename] is defined ~%}
             {%- set photo = site.data.photos[file.basename] -%}
           {%- endif ~%}
-          {%- set image = asset(file.path)|resize(site.photos.size.thumbnail|default(640)) ~%}
+          {%- set image = asset(file.path)|resize(site.photos.size.thumbnail|default(640)) -%}
+          {%- set imagefull = asset(file.path)|resize(site.photos.size.full|default(1920)) ~%}
         <div class="photo" style="background-color: {{ image|dominant_color }}">
           {%- set attributes = {'alt': photo.alt|default(photo.title|default)} -%}
           {%- if loop.index > 10 %}{% set attributes = attributes|merge({loading: 'lazy'}) %}{% endif ~%}
-          <a data-fslightbox="gallery" href="{{ url(asset(file.path)|resize(site.photos.size.full|default(1920))) }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
+          <a href="{{ url(imagefull) }}" data-pswp-width="{{ imagefull.width }}" data-pswp-height="{{ imagefull.height }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
             {{ image|html(attributes|merge({decoding: 'async'})) }}
           </a>
           {%- if photo.title is defined or photo.author.name is defined ~%}
-          <div class="data">
+          <div class="caption">
             {%- if photo.title is defined ~%}
             <em>{{ photo.title }}</em>
             {%- endif ~%}
@@ -111,5 +115,41 @@
         {%- set photo = '' -%}
         {%- endfor ~%}
       </div>
-      <script src="{{ asset('js/fslightbox.js') }}"></script>
+      <script type="module">
+        import PhotoSwipeLightbox from '{{ asset('photoswipe/photoswipe-lightbox.esm.js') }}';
+        import PhotoSwipeDynamicCaption from '{{ asset('photoswipe/photoswipe-dynamic-caption-plugin.esm.js') }}';
+        const lightbox = new PhotoSwipeLightbox({
+          gallery: '#gallery',
+          childSelector: '.photo',
+          imageClickAction: 'close',
+          tapAction: 'close',
+          pswpModule: () => import('{{ asset('photoswipe/photoswipe.esm.js') }}'),
+        });
+        const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
+          type: 'auto',
+          captionContent: '.caption',
+        });
+        lightbox.on('uiRegister', function() {
+          lightbox.pswp.ui.registerElement({
+            name: 'download-button',
+            order: 8,
+            isButton: true,
+            tagName: 'a',
+            html: {
+              isCustomSVG: true,
+              inner: '<path d="M20.5 14.3 17.1 18V10h-2.2v7.9l-3.4-3.6L10 16l6 6.1 6-6.1ZM23 23H9v2h14Z" id="pswp__icn-download"/>',
+              outlineID: 'pswp__icn-download'
+            },
+            onInit: (el, pswp) => {
+              el.setAttribute('download', '');
+              el.setAttribute('target', '_blank');
+              el.setAttribute('rel', 'noopener');
+              pswp.on('change', () => {
+                el.href = pswp.currSlide.data.src;
+              });
+            }
+          });
+        });
+        lightbox.init();
+      </script>
       {%- endblock ~%}

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ site.language }}">
   <head>
+    {%- block head ~%}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     {%~ include 'partials/metatags.html.twig' ~%}
@@ -29,6 +30,7 @@
       {%- endblock css -%}
       {%- endapply ~%}
     </style>
+    {%- endblock head ~%}
   </head>
   <body>
     <main>
