@@ -7,9 +7,11 @@ Demo: <https://photo-stream-demo.cecil.app> (hosted by [Netlify](https://www.net
 ## Features
 
 - Responsives images & mobile friendly
-- Images files optimized and lazy loaded
+- Files optimized and lazy loaded
+- Rich content caption
 - Background filled with the dominant color
 - Keyboard navigation
+- Direct download button
 - Simple workflow: drag & drop and commit
 
 ## Install
@@ -97,7 +99,7 @@ Or use a provider:
 
 _Photo Stream_ is a free software distributed under the terms of the [MIT license](LICENSE).
 
-[JS Lightbox](https://fslightbox.com/) is under the terms of the MIT license.
+[PhotoSwipe](https://photoswipe.com) is under the terms of the MIT license.
 
 Photos from the demo are under the [Unsplash license](https://unsplash.com/license).
 
