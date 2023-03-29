@@ -3,8 +3,16 @@
   {%- set files = files|reverse %}
 {% endif %}
 {% set image = files|first.path %}
+
 {% extends '_default/page.html.twig' %}
-      {%- block css ~%}
+
+    {%- block head -%}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('photoswipe/photoswipe.css') }}">
+    <link rel="stylesheet" href="{{ asset('photoswipe/photoswipe-dynamic-caption-plugin.css') }}">
+    {%- endblock head -%}
+
+      {%- block css -%}
       {{ parent() }}
       div#gallery {
         display: flex;
@@ -72,12 +80,15 @@
       #gallery div.caption span.author {
         font-style: normal;
       }
-      {%- endblock css ~%}
-    {%- block head ~%}
-    {{- parent() ~}}
-    <link rel="stylesheet" href="{{ asset('photoswipe/photoswipe.css') }}">
-    <link rel="stylesheet" href="{{ asset('photoswipe/photoswipe-dynamic-caption-plugin.css') }}">
-    {%- endblock head ~%}
+      .pswp {
+        --pswp-bg: {{ site.style.color.background }};
+      }
+      .pswp__dynamic-caption,
+      .pswp__dynamic-caption a {
+        color: {{ site.style.color.text }};
+      }
+      {%- endblock css -%}
+
       {%- block content ~%}
       <div id="gallery">
         <h1 class="title"><a href="{{ url('/') }}" title="{{ site.description|default(site.title) }}">{{ site.title }}</a></h1>
@@ -116,11 +127,13 @@
         {%- endfor ~%}
       </div>
       <script type="module">
+        {%- apply minify_js ~%}
         import PhotoSwipeLightbox from '{{ asset('photoswipe/photoswipe-lightbox.esm.js') }}';
         import PhotoSwipeDynamicCaption from '{{ asset('photoswipe/photoswipe-dynamic-caption-plugin.esm.js') }}';
         const lightbox = new PhotoSwipeLightbox({
           gallery: '#gallery',
           childSelector: '.photo',
+          bgOpacity: 1.0,
           imageClickAction: 'close',
           tapAction: 'close',
           pswpModule: () => import('{{ asset('photoswipe/photoswipe.esm.js') }}'),
@@ -151,5 +164,6 @@
           });
         });
         lightbox.init();
+        {%- endapply ~%}
       </script>
-      {%- endblock ~%}
+      {%- endblock content ~%}
