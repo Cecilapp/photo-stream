@@ -132,14 +132,13 @@
         import PhotoSwipeDynamicCaption from '{{ asset('photoswipe/photoswipe-dynamic-caption-plugin.esm.js') }}';
         const lightbox = new PhotoSwipeLightbox({
           gallery: '#gallery',
-          childSelector: '.photo',
+          children: '.photo',
           bgOpacity: 1.0,
           imageClickAction: 'close',
           tapAction: 'close',
           pswpModule: () => import('{{ asset('photoswipe/photoswipe.esm.js') }}'),
         });
         const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
-          type: 'auto',
           captionContent: '.caption',
         });
         lightbox.on('uiRegister', function() {
