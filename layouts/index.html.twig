@@ -98,7 +98,11 @@
           {%- endif ~%}
           {%- set image = asset(file.path)|resize(site.photos.size.thumbnail|default(640)) -%}
           {%- set imagefull = asset(file.path)|resize(site.photos.size.full|default(1920)) ~%}
-        <div class="photo" style="background-color: {{ image|dominant_color }}">
+          {%- if site.photos.placeholder|default('color') == 'image' ~%}
+        <div class="photo" style="background-image:url({{ image|lqip }});background-repeat:no-repeat;background-position:center;background-size:cover;">
+          {%- else ~%}
+        <div class="photo" style="background-color:{{ image|dominant_color }}">
+          {%- endif ~%}
           {%- set attributes = {'alt': photo.alt|default(photo.title|default)} -%}
           {%- if loop.index > 10 %}{% set attributes = attributes|merge({loading: 'lazy'}) %}{% endif ~%}
           <a href="{{ url(imagefull) }}" data-pswp-width="{{ imagefull.width }}" data-pswp-height="{{ imagefull.height }}" aria-label="{{ "Click to view this photo in full size"|trans }}">

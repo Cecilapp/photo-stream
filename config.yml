@@ -17,6 +17,7 @@ photos:
   size:
     thumbnail: 640
     full: 1920
+  placeholder: image # image or color
 
 output:
   pagetypeformats:
