@@ -9,14 +9,14 @@ Demo: <https://photo-stream-demo.cecil.app> (hosted by [Netlify](https://www.net
 - Responsives images & mobile friendly
 - Files optimized and lazy loaded
 - Rich content caption
-- Background filled with the dominant color
+- Image placeholder (low quality version or dominant color)
 - Keyboard navigation
 - Direct download button
 - Simple workflow: drag & drop and commit
 
 ## Install
 
-> PHP 7.4+ and [Cecil](https://cecil.app/download/) 7.31+ are required.
+> PHP 7.4+ and [Cecil](https://cecil.app/download/) 7.34+ are required.
 
 First you should clone or download the [Git repository](https://github.com/Cecilapp/photo-stream.git).
 
