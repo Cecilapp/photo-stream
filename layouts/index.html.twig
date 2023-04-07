@@ -1,5 +1,5 @@
 {% set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.exif.DateTimeOriginal|default(a.date)|date('U') <=> b.exif.DateTimeOriginal|default(b.date)|date('U')) %}
-{% if site.photos.sort == 'desc'|default('asc') %}
+{% if site.photo.sort == 'desc'|default('asc') %}
   {%- set files = files|reverse %}
 {% endif %}
 {% set image = files|first.path %}
@@ -81,11 +81,11 @@
         font-style: normal;
       }
       .pswp {
-        --pswp-bg: {{ site.style.color.background }};
+        --pswp-bg: {{ site.photo.style.color.background }};
       }
       .pswp__dynamic-caption,
       .pswp__dynamic-caption a {
-        color: {{ site.style.color.text }};
+        color: {{ site.photo.style.color.text }};
       }
       {%- endblock css -%}
 
@@ -96,9 +96,9 @@
           {%- if site.data.photos[file.basename] is defined ~%}
             {%- set photo = site.data.photos[file.basename] -%}
           {%- endif ~%}
-          {%- set image = asset(file.path)|resize(site.photos.size.thumbnail|default(640)) -%}
-          {%- set imagefull = asset(file.path)|resize(site.photos.size.full|default(1920)) ~%}
-          {%- if site.photos.placeholder|default('color') == 'image' ~%}
+          {%- set image = asset(file.path)|resize(site.photo.size.thumbnail|default(640)) -%}
+          {%- set imagefull = asset(file.path)|resize(site.photo.size.full|default(1920)) ~%}
+          {%- if site.photo.placeholder|default('color') == 'image' ~%}
         <div class="photo" style="background-image:url({{ image|lqip }});background-repeat:no-repeat;background-position:center;background-size:cover;">
           {%- else ~%}
         <div class="photo" style="background-color:{{ image|dominant_color }}">

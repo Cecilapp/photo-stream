@@ -50,14 +50,14 @@ For each photo you can add a title, an alternative text and the author name/URL,
 You can define gallery title, baseurl, author, colors, thumbnails size, sort, etc. by editing [`config.yml`](config.yml) file:
 
 ```yaml
-style:
-  color:
-    background: "black"
-    text: "white"
-  photo:
-    height: 300px
-    margin: 2px
-photos:
+photo:
+  style:
+    color:
+      background: "black"
+      text: "white"
+    img:
+      height: 300px
+      margin: 2px
   sort: asc
   size:
     thumbnail: 640

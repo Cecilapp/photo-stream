@@ -8,10 +8,10 @@
     <style>
       {% apply scss_to_css|minify_css -%}
       {%- block css -%}
-      $background: {{ site.style.color.background }};
-      $color: {{ site.style.color.text }};
-      $height: {{ site.style.photo.height }};
-      $margin: {{ site.style.photo.margin }};
+      $background: {{ site.photo.style.color.background }};
+      $color: {{ site.photo.style.color.text }};
+      $height: {{ site.photo.style.img.height }};
+      $margin: {{ site.photo.style.img.margin }};
       body {
         font: 16px/24px -apple-system, Roboto, Helvetica, Arial, sans-serif;
         background: $background;
