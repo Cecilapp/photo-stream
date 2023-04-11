@@ -62,7 +62,7 @@ photo:
   size:
     thumbnail: 640
     full: 1920
-  placeholder: image # image or color
+  placeholder: image # image, color or false
 ```
 
 ### Preview locally
