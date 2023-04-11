@@ -8,8 +8,8 @@
 
     {%- block head -%}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('photoswipe/photoswipe.css') }}">
-    <link rel="stylesheet" href="{{ asset('photoswipe/photoswipe-dynamic-caption-plugin.css') }}">
+    <style>{{ asset('photoswipe/photoswipe.css')|inline }}</style>
+    <style>{{ asset('photoswipe/photoswipe-dynamic-caption-plugin.css')|inline }}</style>
     {%- endblock head -%}
 
       {%- block css -%}
@@ -133,7 +133,7 @@
         {%- endfor ~%}
       </div>
       <script type="module">
-        {%- apply minify_js ~%}
+        {%- apply minify_js -%}
         import PhotoSwipeLightbox from '{{ asset('photoswipe/photoswipe-lightbox.esm.js') }}';
         import PhotoSwipeDynamicCaption from '{{ asset('photoswipe/photoswipe-dynamic-caption-plugin.esm.js') }}';
         const lightbox = new PhotoSwipeLightbox({
@@ -169,6 +169,6 @@
           });
         });
         lightbox.init();
-        {%- endapply ~%}
+        {%- endapply -%}
       </script>
       {%- endblock content ~%}
