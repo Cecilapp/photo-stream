@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width">
     {%~ include 'partials/metatags.html.twig' ~%}
     <style>
-      {% apply scss_to_css|minify_css -%}
+      {%- apply scss_to_css|minify_css -%}
       {%- block css -%}
       $background: {{ site.photo.style.color.background }};
       $color: {{ site.photo.style.color.text }};
@@ -28,7 +28,7 @@
         justify-content: space-between;
       }
       {%- endblock css -%}
-      {%- endapply ~%}
+      {%- endapply -%}
     </style>
     {%- endblock head ~%}
   </head>
