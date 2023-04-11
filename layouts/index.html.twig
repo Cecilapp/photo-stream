@@ -98,7 +98,9 @@
           {%- endif ~%}
           {%- set image = asset(file.path)|resize(site.photo.size.thumbnail|default(640)) -%}
           {%- set imagefull = asset(file.path)|resize(site.photo.size.full|default(1920)) ~%}
-          {%- if site.photo.placeholder|default('color') == 'image' ~%}
+          {%- if site.photo.placeholder ?? false == false ~%}
+        <div class="photo">
+          {%- elseif site.photo.placeholder|default('color') == 'image' ~%}
         <div class="photo" style="background-image:url({{ image|lqip }});background-repeat:no-repeat;background-position:center;background-size:cover;">
           {%- else ~%}
         <div class="photo" style="background-color:{{ image|dominant_color }}">
