@@ -106,6 +106,7 @@
         <div class="photo" style="background-color:{{ image|dominant_color }}">
           {%- endif ~%}
           {%- set attributes = {'alt': photo.alt|default(photo.title|default)} -%}
+          {#{%- set attributes = {'alt': photo.alt|default(photo.title|default), 'placeholder': image|lqip} -%}#}
           {%- if loop.index > 10 %}{% set attributes = attributes|merge({loading: 'lazy'}) %}{% endif ~%}
           <a href="{{ url(imagefull) }}" data-pswp-width="{{ imagefull.width }}" data-pswp-height="{{ imagefull.height }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
             {{ image|html(attributes|merge({decoding: 'async'})) }}
@@ -171,4 +172,20 @@
         lightbox.init();
         {%- endapply -%}
       </script>
+      {#<script>
+        const imgElements = document.querySelectorAll('img');
+        for(let i = 0; i < imgElements.length; i++){
+          const image = imgElements[i];
+          const fullSrc = image.src;
+          image.src = image.getAttribute('placeholder');
+          const fullImage = new Image();
+          fullImage.src = fullSrc;
+          fullImage.onload = function() {
+            setTimeout(() => {
+              image.src = fullSrc;
+              image.removeAttribute('placeholder');
+            }, 200);
+          };
+        }
+      </script>#}
       {%- endblock content ~%}
