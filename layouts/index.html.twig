@@ -3,11 +3,14 @@
   {%- set files = files|reverse %}
 {% endif %}
 {% set image = files|first.path %}
+{% set image_asset = asset(image) %}
 
 {% extends '_default/page.html.twig' %}
 
     {%- block head -%}
     {{ parent() }}
+    <link rel="preload" as="image" href="{{ url(image_asset) }}" imagesrcset="{{ image_srcset(image_asset) }}" imagesizes="{{ image_sizes('') }}">
+    <link rel="preload" as="image" href="{{ url(image_asset|webp) }}" imagesrcset="{{ image_srcset(image_asset|webp) }}" imagesizes="{{ image_sizes('') }}">
     <style>{{ asset('photoswipe/photoswipe.css')|inline }}</style>
     <style>{{ asset('photoswipe/photoswipe-dynamic-caption-plugin.css')|inline }}</style>
     {%- endblock head -%}
