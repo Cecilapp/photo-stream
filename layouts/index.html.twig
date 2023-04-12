@@ -3,14 +3,13 @@
   {%- set files = files|reverse %}
 {% endif %}
 {% set image = files|first.path %}
-{% set image_asset = asset(image) %}
+{% set image_asset = asset(image)|resize(site.photo.size.thumbnail|default(640)) %}
 
 {% extends '_default/page.html.twig' %}
 
     {%- block head -%}
     {{ parent() }}
-    <link rel="preload" as="image" href="{{ url(image_asset) }}" imagesrcset="{{ image_srcset(image_asset) }}" imagesizes="{{ image_sizes('') }}">
-    <link rel="preload" as="image" href="{{ url(image_asset|webp) }}" imagesrcset="{{ image_srcset(image_asset|webp) }}" imagesizes="{{ image_sizes('') }}">
+    <link rel="preload" as="image" href="{{ url(image_asset|webp) }}" imagesrcset="{{ image_srcset(image_asset|webp) }}" imagesizes="{{ image_sizes('default') }}">
     <style>{{ asset('photoswipe/photoswipe.css')|inline }}</style>
     <style>{{ asset('photoswipe/photoswipe-dynamic-caption-plugin.css')|inline }}</style>
     {%- endblock head -%}
@@ -54,6 +53,7 @@
         max-width: 100%;
         min-width: 100%;
         vertical-align: bottom;
+        animation: fadeIn 500ms ease-in-out;
       }
       #gallery img:hover {
         cursor: zoom-in;
@@ -108,7 +108,7 @@
           {%- else ~%}
         <div class="photo" style="background-color:{{ image|dominant_color }}">
           {%- endif ~%}
-          {%- set attributes = {'alt': photo.alt|default(photo.title|default)} -%}
+          {%- set attributes = {alt: photo.alt|default(photo.title|default)} -%}
           {%- if loop.index > 10 %}{% set attributes = attributes|merge({loading: 'lazy'}) %}{% endif ~%}
           <a href="{{ url(imagefull) }}" data-pswp-width="{{ imagefull.width }}" data-pswp-height="{{ imagefull.height }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
             {{ image|html(attributes|merge({decoding: 'async'})) }}
