@@ -9,7 +9,7 @@ Demo: <https://photo-stream-demo.cecil.app> (hosted by [Netlify](https://www.net
 - Responsives images & mobile friendly
 - Files optimized and lazy loaded
 - Rich content caption
-- Image placeholder (low quality version or dominant color)
+- Image placeholder (low quality or dominant color)
 - Keyboard navigation
 - Direct download button
 - Simple workflow: drag & drop and commit
