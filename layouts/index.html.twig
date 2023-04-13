@@ -1,8 +1,10 @@
+{# fetches photos in "static/photos", sorted by date #}
 {% set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.exif.DateTimeOriginal|default(a.date)|date('U') <=> b.exif.DateTimeOriginal|default(b.date)|date('U')) %}
-{% if site.photo.sort == 'desc'|default('asc') %}
-  {%- set files = files|reverse %}
-{% endif %}
+{# reverses sort if necessary #}
+{% if site.photo.sort == 'desc'|default('asc') %}{%- set files = files|reverse %}{% endif %}
+{# uses the first photo for Open Graph image #}
 {% set image = files|first.path %}
+{# creates first asset for preload #}
 {% set image_asset = asset(image)|resize(site.photo.size.thumbnail|default(640)) %}
 
 {% extends '_default/page.html.twig' %}
@@ -97,34 +99,34 @@
         <h1 class="title"><a href="{{ url('/') }}" title="{{ site.description|default(site.title) }}">{{ site.title }}</a></h1>
         {%- for file in files ~%}
           {%- if site.data.photos[file.basename] is defined ~%}
-            {%- set photo = site.data.photos[file.basename] -%}
+            {%- set photo_data = site.data.photos[file.basename] -%}
           {%- endif ~%}
-          {%- set image = asset(file.path)|resize(site.photo.size.thumbnail|default(640)) -%}
-          {%- set imagefull = asset(file.path)|resize(site.photo.size.full|default(1920)) ~%}
+          {%- set photo = asset(file.path)|resize(site.photo.size.thumbnail|default(640)) -%}
+          {%- set photo_full = asset(file.path)|resize(site.photo.size.full|default(1920)) ~%}
           {%- if site.photo.placeholder ?? false == false ~%}
         <div class="photo">
-          {%- elseif site.photo.placeholder|default('color') == 'image' ~%}
-        <div class="photo" style="background-image:url({{ image|lqip }});background-repeat:no-repeat;background-position:center;background-size:cover;">
-          {%- else ~%}
-        <div class="photo" style="background-color:{{ image|dominant_color }}">
+          {%- elseif site.photo.placeholder ?? false == 'image' ~%}
+        <div class="photo" style="background-image:url({{ photo|lqip }});background-repeat:no-repeat;background-position:center;background-size:cover;">
+          {%- elseif site.photo.placeholder ?? false == 'color' ~%}
+        <div class="photo" style="background-color:{{ photo|dominant_color }}">
           {%- endif ~%}
-          {%- set attributes = {alt: photo.alt|default(photo.title|default)} -%}
+          {%- set attributes = {alt: photo_data.alt|default(photo_data.title|default), decoding: 'async'} -%}
           {%- if loop.index > 10 %}{% set attributes = attributes|merge({loading: 'lazy'}) %}{% endif ~%}
-          <a href="{{ url(imagefull) }}" data-pswp-width="{{ imagefull.width }}" data-pswp-height="{{ imagefull.height }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
-            {{ image|html(attributes|merge({decoding: 'async'})) }}
+          <a href="{{ url(photo_full) }}" data-pswp-width="{{ photo_full.width }}" data-pswp-height="{{ photo_full.height }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
+            {{ photo|html(attributes) }}
           </a>
-          {%- if photo.title is defined or photo.author.name is defined ~%}
+          {%- if photo_data.title is defined or photo_data.author.name is defined ~%}
           <div class="caption">
-            {%- if photo.title is defined ~%}
-            <em>{{ photo.title }}</em>
+            {%- if photo_data.title is defined ~%}
+            <em>{{ photo_data.title }}</em>
             {%- endif ~%}
-            {%- if photo.title is defined and photo.author.name is defined %} &middot; {% endif ~%}
-            {%- if photo.author.name is defined ~%}
+            {%- if photo_data.title is defined and photo_data.author.name is defined %} &middot; {% endif ~%}
+            {%- if photo_data.author.name is defined ~%}
             {%- set author -%}
-              {%- if photo.author.url is defined -%}
-                <a href="{{ photo.author.url }}" title="{% trans %}Author's page{% endtrans %}">{{ photo.author.name }}</a>
+              {%- if photo_data.author.url is defined -%}
+                <a href="{{ photo_data.author.url }}" title="{% trans %}Author's page{% endtrans %}">{{ photo_data.author.name }}</a>
               {%- else -%}
-                {{ photo.author.name }}
+                {{ photo_data.author.name }}
               {%- endif -%}
             {%- endset ~%}
             <span class="author">{%- trans %}Credit: %author%{% endtrans ~%}</span>
@@ -132,7 +134,6 @@
           </div>
           {%- endif ~%}
         </div>
-        {%- set photo = '' -%}
         {%- endfor ~%}
       </div>
       <script type="module">
