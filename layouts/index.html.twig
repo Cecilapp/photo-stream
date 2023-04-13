@@ -10,6 +10,16 @@
     {%- block head -%}
     {{ parent() }}
     <link rel="preload" as="image" href="{{ url(image_asset|webp) }}" imagesrcset="{{ image_srcset(image_asset|webp) }}" imagesizes="{{ image_sizes('default') }}">
+    <style>{% apply minify_css %}
+      {%- for file in files ~%}
+      .LQIP-{{ asset(file.path)|resize(site.photo.size.thumbnail|default(640)).filename|replace({'/': '', '.jpg': ''}) }} {
+        background: url({{ asset(file.path)|resize(site.photo.size.thumbnail|default(640))|lqip }});
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+      {%- endfor ~%}
+    {% endapply %}</style>
     <style>{{ asset('photoswipe/photoswipe.css')|inline }}</style>
     <style>{{ asset('photoswipe/photoswipe-dynamic-caption-plugin.css')|inline }}</style>
     {%- endblock head -%}
@@ -104,7 +114,7 @@
           {%- if site.photo.placeholder ?? false == false ~%}
         <div class="photo">
           {%- elseif site.photo.placeholder|default('color') == 'image' ~%}
-        <div class="photo" style="background-image:url({{ image|lqip }});background-repeat:no-repeat;background-position:center;background-size:cover;">
+        <div class="photo LQIP-{{ asset(file.path)|resize(site.photo.size.thumbnail|default(640)).filename|replace({'/': '', '.jpg': ''}) }}">
           {%- else ~%}
         <div class="photo" style="background-color:{{ image|dominant_color }}">
           {%- endif ~%}
