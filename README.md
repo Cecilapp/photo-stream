@@ -38,8 +38,8 @@ For each photo you can add a title, an alternative text and the author name/URL,
 
 ```yaml
 <file basename>: # without file extension
-  title: "<photo title>"
-  alt: "<alternative text>"
+  title: <photo title>
+  alt: <alternative text>
   author:
     name: <author name>
     url: <author URL>
@@ -53,8 +53,8 @@ You can define gallery title, baseurl, author, colors, thumbnails size, sort, et
 photo:
   style:
     color:
-      background: "black"
-      text: "white"
+      background: black
+      text: white
     img:
       height: 300px
       margin: 2px
