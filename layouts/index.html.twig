@@ -12,8 +12,8 @@
     {%- block head -%}
     {{ parent() }}
     <link rel="preload" as="image" href="{{ url(image_asset|webp) }}" imagesrcset="{{ image_srcset(image_asset|webp) }}" imagesizes="{{ image_sizes('default') }}">
-    <style>{{ asset('photoswipe/photoswipe.css')|inline }}</style>
-    <style>{{ asset('photoswipe/photoswipe-dynamic-caption-plugin.css')|inline }}</style>
+    <style>{{ asset(site.photoswipe.core.css, {remote_fallback: 'photoswipe/photoswipe.css'})|inline }}</style>
+    <style>{{ asset(site.photoswipe.caption.css, {remote_fallback: 'photoswipe/photoswipe-dynamic-caption-plugin.css'})|inline }}</style>
     {%- endblock head -%}
 
       {%- block css -%}
@@ -138,15 +138,15 @@
       </div>
       <script type="module">
         {%- apply minify_js -%}
-        import PhotoSwipeLightbox from '{{ asset('photoswipe/photoswipe-lightbox.esm.js') }}';
-        import PhotoSwipeDynamicCaption from '{{ asset('photoswipe/photoswipe-dynamic-caption-plugin.esm.js') }}';
+        import PhotoSwipeLightbox from '{{ asset(site.photoswipe.lightbox.js, {remote_fallback: 'photoswipe/photoswipe-lightbox.esm.js'}) }}';
+        import PhotoSwipeDynamicCaption from '{{ asset(site.photoswipe.caption.js, {remote_fallback: 'photoswipe/photoswipe-dynamic-caption-plugin.esm.js'}) }}';
         const lightbox = new PhotoSwipeLightbox({
           gallery: '#gallery',
           children: '.photo',
           bgOpacity: 1.0,
           imageClickAction: 'close',
           tapAction: 'close',
-          pswpModule: () => import('{{ asset('photoswipe/photoswipe.esm.js') }}'),
+          pswpModule: () => import('{{ asset(site.photoswipe.core.js, {remote_fallback: 'photoswipe/photoswipe.esm.js'}) }}'),
           errorMsg: '{% trans -%}The photo cannot be loaded{%- endtrans %}',
         });
         const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {

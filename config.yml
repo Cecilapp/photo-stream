@@ -19,6 +19,16 @@ photo:
     full: 1920
   placeholder: image # image, color or false
 
+photoswipe:
+  core:
+    js: https://raw.githubusercontent.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.esm.js
+    css: https://raw.githubusercontent.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.css
+  lightbox:
+    js: https://raw.githubusercontent.com/dimsemenov/PhotoSwipe/master/dist/photoswipe-lightbox.esm.js
+  caption:
+    js: https://raw.githubusercontent.com/dimsemenov/photoswipe-dynamic-caption-plugin/main/photoswipe-dynamic-caption-plugin.esm.js
+    css: https://raw.githubusercontent.com/dimsemenov/photoswipe-dynamic-caption-plugin/main/photoswipe-dynamic-caption-plugin.css
+
 output:
   pagetypeformats:
     homepage: html
