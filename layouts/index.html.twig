@@ -147,6 +147,7 @@
           imageClickAction: 'close',
           tapAction: 'close',
           pswpModule: () => import('{{ asset('photoswipe/photoswipe.esm.js') }}'),
+          errorMsg: '{% trans -%}The photo cannot be loaded{%- endtrans %}',
         });
         const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
           captionContent: '.caption',
