@@ -96,7 +96,7 @@
 
       {%- block content ~%}
       <div id="gallery">
-        <h1 class="title"><a href="{{ url('/') }}" title="{{ site.description|default(site.title) }}">{{ site.title }}</a></h1>
+        <h1 class="title"><a href="{{ url(site.home) }}" title="{{ site.description|default(site.title) }}">{{ site.title }}</a></h1>
         {%- for file in files ~%}
           {%- if site.data.photos[file.basename] is defined ~%}
             {%- set photo_data = site.data.photos[file.basename] -%}
@@ -134,6 +134,7 @@
           </div>
           {%- endif ~%}
         </div>
+        {%- set photo_data = '' -%}
         {%- endfor ~%}
       </div>
       <script type="module">
