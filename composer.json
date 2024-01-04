@@ -11,6 +11,9 @@
       "role": "Developer"
     }
   ],
+  "scripts": {
+    "post-create-project-cmd": "curl -LO https://cecil.app/cecil.phar"
+  },
   "config": {
     "allow-plugins": {
       "cecil/theme-installer": true
