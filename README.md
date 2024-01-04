@@ -18,7 +18,7 @@ Demo: <https://photo-stream-demo.cecil.app> (hosted by [Netlify](https://www.net
 
 > PHP 8.1+ and [Cecil](https://cecil.app/download/) 8.0+ are required.
 
-First you should clone or download the [Git repository](https://github.com/Cecilapp/photo-stream.git).
+First you should clone or download the [Git repository](https://github.com/Cecilapp/photo-stream.git), or run `composer create-project cecil/photo-stream myproject`.
 
 The repository come with a default version of `cecil.phar`, so you can you use it immediately, or you can download the latest release throught the following command:
 
