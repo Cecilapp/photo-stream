@@ -1,0 +1,19 @@
+{
+  "name": "cecil/photo-stream",
+  "description": "Photo Stream is a self hosted static website for your photos, with really goods loading performances, powered by Cecil.",
+  "license": "MIT",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Arnaud Ligny",
+      "email": "arnaud@ligny.fr",
+      "homepage": "https://arnaudligny.fr",
+      "role": "Developer"
+    }
+  ],
+  "config": {
+    "allow-plugins": {
+      "cecil/theme-installer": true
+    }
+  }
+}
