@@ -1,5 +1,5 @@
 {# fetches photos in "static/photos", sorted by date #}
-{% set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.exif.DateTimeOriginal|default(a.date)|date('U') <=> b.exif.DateTimeOriginal|default(b.date)|date('U')) %}
+{% set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.exif.EXIF.DateTimeOriginal|default(a.date)|date('U') <=> b.exif.EXIF.DateTimeOriginal|default(b.date)|date('U')) %}
 {# reverses sort if necessary #}
 {% if site.photo.sort == 'desc'|default('asc') %}{%- set files = files|reverse %}{% endif %}
 {# uses the first photo for Open Graph image #}
