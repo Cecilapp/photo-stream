@@ -8,8 +8,8 @@ author:
 photo:
   style:
     color:
-      background: "black"
-      text: "white"
+      background: black
+      text: white
     img:
       height: 300px
       margin: 2px
