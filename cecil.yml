@@ -44,11 +44,11 @@ metatags:
     enabled: true
 assets:
   images:
-    optimize:
-      enabled: true
-    quality: 75
-    responsive:
-      enabled: true
+    #optimize:
+    #  enabled: true
+    #quality: 75
+    #responsive:
+    #  enabled: true
     webp:
       enabled: true
 output:
