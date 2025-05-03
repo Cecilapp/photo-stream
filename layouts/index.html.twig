@@ -12,8 +12,8 @@
     {%- block head -%}
     {{ parent() }}
     <link rel="preload" as="image" href="{{ url(image_asset|webp) }}" imagesrcset="{{ image_srcset(image_asset|webp) }}" imagesizes="{{ image_sizes('default') }}">
-    <style>{{ asset(site.photoswipe.core.css, {remote_fallback: 'photoswipe/photoswipe.css'})|inline }}</style>
-    <style>{{ asset(site.photoswipe.caption.css, {remote_fallback: 'photoswipe/photoswipe-dynamic-caption-plugin.css'})|inline }}</style>
+    <style>{{ asset(site.photoswipe.core.css, {fallback: 'photoswipe/photoswipe.css'})|inline }}</style>
+    <style>{{ asset(site.photoswipe.caption.css, {fallback: 'photoswipe/photoswipe-dynamic-caption-plugin.css'})|inline }}</style>
     {%- endblock head -%}
 
       {%- block css -%}
@@ -101,7 +101,7 @@
           {%- if site.data.photos[file.basename] is defined ~%}
             {%- set photo_data = site.data.photos[file.basename] -%}
           {%- endif ~%}
-          {%- set photo = asset(file.path)|resize(site.photo.size.thumbnail|default(640)) -%}
+          {%- set photo = asset(file.path)|webp|resize(site.photo.size.thumbnail|default(640)) -%}
           {%- set photo_full = asset(file.path)|resize(site.photo.size.full|default(1920)) ~%}
           {%- if site.photo.placeholder ?? false == false ~%}
         <div class="photo">
@@ -139,15 +139,15 @@
       </div>
       <script type="module">
         {%- apply minify_js -%}
-        import PhotoSwipeLightbox from '{{ asset(site.photoswipe.lightbox.js, {remote_fallback: 'photoswipe/photoswipe-lightbox.esm.js'}) }}';
-        import PhotoSwipeDynamicCaption from '{{ asset(site.photoswipe.caption.js, {remote_fallback: 'photoswipe/photoswipe-dynamic-caption-plugin.esm.js'}) }}';
+        import PhotoSwipeLightbox from '{{ asset(site.photoswipe.lightbox.js, {fallback: 'photoswipe/photoswipe-lightbox.esm.js'}) }}';
+        import PhotoSwipeDynamicCaption from '{{ asset(site.photoswipe.caption.js, {fallback: 'photoswipe/photoswipe-dynamic-caption-plugin.esm.js'}) }}';
         const lightbox = new PhotoSwipeLightbox({
           gallery: '#gallery',
           children: '.photo',
           bgOpacity: 1.0,
           imageClickAction: 'close',
           tapAction: 'close',
-          pswpModule: () => import('{{ asset(site.photoswipe.core.js, {remote_fallback: 'photoswipe/photoswipe.esm.js'}) }}'),
+          pswpModule: () => import('{{ asset(site.photoswipe.core.js, {fallback: 'photoswipe/photoswipe.esm.js'}) }}'),
           errorMsg: '{% trans -%}The photo cannot be loaded{%- endtrans %}',
         });
         const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {

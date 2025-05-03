@@ -40,17 +40,10 @@ pages:
 static:
   load: true
 metatags:
-  jsonld:
-    enabled: true
+  jsonld: true
 assets:
   images:
-    #optimize:
-    #  enabled: true
-    #quality: 75
-    #responsive:
-    #  enabled: true
-    webp:
-      enabled: true
+    optimize: true
 output:
   pagetypeformats:
     homepage: html
