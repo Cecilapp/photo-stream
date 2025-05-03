@@ -43,7 +43,7 @@ metatags:
   jsonld: true
 assets:
   images:
-    optimize: true
+    optimize: false
 output:
   pagetypeformats:
     homepage: html
