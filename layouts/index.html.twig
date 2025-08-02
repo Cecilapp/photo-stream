@@ -101,7 +101,7 @@
           {%- if site.data.photos[file.basename] is defined ~%}
             {%- set photo_data = site.data.photos[file.basename] -%}
           {%- endif ~%}
-          {%- set photo = asset(file.path)|webp|resize(site.photo.size.thumbnail|default(640)) -%}
+          {%- set photo = asset(file.path)|resize(site.photo.size.thumbnail|default(640))|webp -%}
           {%- set photo_full = asset(file.path)|resize(site.photo.size.full|default(1920)) ~%}
           {%- if site.photo.placeholder ?? false == false ~%}
         <div class="photo">
@@ -113,7 +113,7 @@
           {%- set attributes = {alt: photo_data.alt|default(photo_data.title|default), decoding: 'async'} -%}
           {%- if loop.index > 10 %}{% set attributes = attributes|merge({loading: 'lazy'}) %}{% endif ~%}
           <a href="{{ url(photo_full) }}" data-pswp-width="{{ photo_full.width }}" data-pswp-height="{{ photo_full.height }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
-            {{ photo|html(attributes) }}
+            {{ html(photo, attributes) }}
           </a>
           {%- if photo_data.title is defined or photo_data.author.name is defined ~%}
           <div class="caption">
