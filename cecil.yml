@@ -44,6 +44,3 @@ metatags:
 assets:
   images:
     optimize: false
-output:
-  pagetypeformats:
-    homepage: html
