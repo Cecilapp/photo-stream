@@ -1,14 +1,14 @@
 # Photo Stream
 
-_Photo Stream_ is a self hosted static website for your photos, with really goods loading performances, powered by [Cecil](https://cecil.app).
+_Photo Stream_ is a self hosted static website for your photos, with really good loading performance, powered by [Cecil](https://cecil.app).
 
-![Screenshot](/docs/screenshot.png)
+![Screenshot](docs/screenshot.png)
 
 Demo: <https://photo-stream-demo.cecil.app> (hosted by [Netlify](https://www.netlify.com) and fed by [Unsplash](https://unsplash.com)).
 
 ## Features
 
-- Responsives images & mobile friendly
+- Responsive images & mobile friendly
 - Files optimized and lazy loaded
 - Rich content caption
 - Image placeholder (low quality or dominant color)
@@ -22,7 +22,7 @@ Demo: <https://photo-stream-demo.cecil.app> (hosted by [Netlify](https://www.net
 
 First you should clone or download the [Git repository](https://github.com/Cecilapp/photo-stream.git), or run `composer create-project cecil/photo-stream myproject`.
 
-The repository come with a default version of `cecil.phar`, so you can you use it immediately, or you can download the latest release throught the following command:
+Then download `cecil.phar` with the following command (this is done automatically by `composer create-project`):
 
 ```bash
 curl -LO https://cecil.app/cecil.phar
@@ -49,7 +49,7 @@ For each photo you can add a title, an alternative text and the author name/URL,
 
 ### Configuration
 
-You can define gallery title, baseurl, author, colors, thumbnails size, sort, etc. by editing [`config.yml`](config.yml) file:
+You can define gallery title, baseurl, author, colors, thumbnails size, sort, etc. by editing the [`cecil.yml`](cecil.yml) file:
 
 ```yaml
 photo:
@@ -86,18 +86,19 @@ You can easily localize _Photo Stream_ in your language.
 
 #### Add languages
 
-`config.yml`:
+`cecil.yml`:
 
 ```yaml
 language: <language_code> # e.g.: fr
 languages:
   - code: <language_code>
+    name: <language_name> # e.g.: Français
     locale: <locale_code> # e.g.: fr_FR
 ```
 
 #### Add translations
 
-In the `translations` directory, copy `translations.en.yaml` to `translations.<language_code>.yaml` then translate each key.
+In the `translations` directory, copy `messages.en.yaml` to `messages.<language_code>.yaml` then translate each key.
 
 ## Deploy
 
@@ -111,7 +112,7 @@ Then copy generated files in `_site` to your Web server.
 
 Or use a provider:
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Cecilapp/photo-stream) [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FCecilapp%2Fphoto-stream&project-name=photo-stream&repository-name=photo-stream&demo-title=Photo%20Stream&demo-description=Super%20simple%20self%20hosted%20photo%20stream%2C%20powered%20by%20Cecil.&demo-url=https%3A%2F%2Fphoto-stream-demo.cecil.app&demo-image=https%3A%2F%2Fgithub.com%2FCecilapp%2Fphoto-stream.cecil.app%2Fraw%2Fmain%2Fassets%2Fpreview.png)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Cecilapp/photo-stream) [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FCecilapp%2Fphoto-stream&project-name=photo-stream&repository-name=photo-stream&demo-title=Photo%20Stream&demo-description=Super%20simple%20self%20hosted%20photo%20stream%2C%20powered%20by%20Cecil.&demo-url=https%3A%2F%2Fphoto-stream-demo.cecil.app&demo-image=https%3A%2F%2Fgithub.com%2FCecilapp%2Fphoto-stream%2Fraw%2Fmaster%2Fdocs%2Fscreenshot.png)
 
 ## License
 
