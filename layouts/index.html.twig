@@ -139,7 +139,11 @@
         <h1 class="title"><a href="{{ url(site.home) }}#" title="{{ site.description|default(site.title) }}">{{ site.title }}</a></h1>
         {%- set placeholder = site.photo.placeholder ?? false -%}
         {%- for file in files ~%}
-          {%- set photo_data = site.data.photos[file.basename] ?? {} -%}
+          {#- photo details: "data/photos.yaml", else EXIF description and artist -#}
+          {%- set photo_exif_data = {} -%}
+          {%- if file.exif.IFD0.ImageDescription|default|trim %}{% set photo_exif_data = photo_exif_data|merge({title: file.exif.IFD0.ImageDescription|trim}) %}{% endif -%}
+          {%- if file.exif.IFD0.Artist|default|trim %}{% set photo_exif_data = photo_exif_data|merge({author: {name: file.exif.IFD0.Artist|trim}}) %}{% endif -%}
+          {%- set photo_data = photo_exif_data|merge(site.data.photos[file.basename] ?? {}) -%}
           {%- set original = asset(file.path) -%}
           {%- set thumbnail_width = site.photo.size.thumbnail|default(640) -%}
           {%- set photo = original|resize(thumbnail_width)|webp -%}

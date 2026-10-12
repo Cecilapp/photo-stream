@@ -51,6 +51,8 @@ For each photo you can add a date, a title, an alternative text and the author n
     url: <author URL>
 ```
 
+If a photo is not described in this file, its title and author are read from its EXIF data (`ImageDescription` and `Artist`), if available.
+
 ### Show metadata (optional)
 
 When `photo.metadata` is enabled (see [configuration](#configuration)), the lightbox caption shows the photo metadata, read from the file EXIF data: camera, lens, focal length, aperture, exposure, ISO and date taken, plus the dimensions and file size.
