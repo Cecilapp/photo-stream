@@ -26,6 +26,8 @@ photo:
   placeholder: image # image, color or false
   metadata: true # displays photo metadata (EXIF) in the lightbox caption
   download: original # download button: original file or full (resized) photo
+  feed:
+    limit: 20 # number of photos in the Atom feed
 
 photoswipe:
   core:
@@ -49,7 +51,7 @@ pages:
       published: false
 output:
   pagetypeformats:
-    homepage: [html]
+    homepage: [html, atom]
 static:
   load: true
 metatags:

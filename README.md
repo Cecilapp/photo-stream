@@ -16,6 +16,7 @@ Demo: <https://photo-stream-demo.cecil.app> (hosted by [Netlify](https://www.net
 - Keyboard navigation
 - Direct download button (original or resized file)
 - Shareable link to each photo
+- Atom feed of the latest photos
 - Simple workflow: drag & drop and commit
 
 ## Install
@@ -89,6 +90,8 @@ photo:
   placeholder: image # image, color or false
   metadata: true # displays photo metadata (EXIF) in the lightbox caption
   download: original # download button: original file or full (resized) photo
+  feed:
+    limit: 20 # number of photos in the Atom feed
 ```
 
 [PhotoSwipe](https://photoswipe.com) files are loaded from [jsDelivr](https://www.jsdelivr.com) (pinned versions, see `photoswipe` in [`cecil.yml`](cecil.yml)), with a fallback to the local copies in `assets/photoswipe`.

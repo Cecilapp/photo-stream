@@ -1,0 +1,59 @@
+{#- Atom feed of the latest photos -#}
+{%- set limit = site.photo.feed.limit|default(20) -%}
+{#- sorted by date, newest first: "date" in "data/photos.yaml", then EXIF date taken, then file date -#}
+{%- set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) =>
+  (site.data.photos[b.basename].date ?? b.exif.EXIF.DateTimeOriginal ?? b.date)|date('U')
+  <=>
+  (site.data.photos[a.basename].date ?? a.exif.EXIF.DateTimeOriginal ?? a.date)|date('U')
+)|slice(0, limit) -%}
+{%- set lang = site.language|default('en') -%}
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{ lang }}">
+  <id>{{ url(page, {canonical: true}) }}</id>
+  <title>{{ site.title|e }}</title>
+  {%- if site.description|default ~%}
+  <subtitle>{{ site.description|e }}</subtitle>
+  {%- endif ~%}
+  <link href="{{ url(page, {canonical: true, format: 'atom'}) }}" rel="self" type="application/atom+xml" />
+  <link href="{{ url(page, {canonical: true, format: 'html'}) }}" rel="alternate" type="text/html" />
+  <updated>{{ site.time|date('c') }}</updated>
+  <author>
+    <name>{{ site.author.name|default(site.title)|e }}</name>
+    {%- if site.author.url|default ~%}
+    <uri>{{ site.author.url }}</uri>
+    {%- endif ~%}
+  </author>
+  {%- for file in files ~%}
+  {#- photo details: "data/photos.yaml", else EXIF description and artist (same as "index.html.twig") -#}
+  {%- set photo_exif_data = {} -%}
+  {%- if file.exif.IFD0.ImageDescription|default|trim %}{% set photo_exif_data = photo_exif_data|merge({title: file.exif.IFD0.ImageDescription|trim}) %}{% endif -%}
+  {%- if file.exif.IFD0.Artist|default|trim %}{% set photo_exif_data = photo_exif_data|merge({author: {name: file.exif.IFD0.Artist|trim}}) %}{% endif -%}
+  {%- set photo_data = photo_exif_data|merge(site.data.photos[file.basename] ?? {}) -%}
+  {%- set photo = asset(file.path)|resize(site.photo.size.full|default(1920)) -%}
+  {%- set photo_url = url(page, {canonical: true, format: 'html'}) ~ '#' ~ file.basename|url_encode -%}
+  {%- set photo_date = site.data.photos[file.basename].date ?? file.exif.EXIF.DateTimeOriginal ?? file.date ~%}
+  <entry>
+    <id>{{ photo_url }}</id>
+    <title>{{ photo_data.title|default(photo_data.alt|default(file.basename))|e }}</title>
+    <published>{{ photo_date|date('c') }}</published>
+    <updated>{{ photo_date|date('c') }}</updated>
+    <link href="{{ photo_url }}" rel="alternate" type="text/html" />
+    {%- if photo_data.author.name is defined ~%}
+    <author>
+      <name>{{ photo_data.author.name|e }}</name>
+      {%- if photo_data.author.url is defined ~%}
+      <uri>{{ photo_data.author.url }}</uri>
+      {%- endif ~%}
+    </author>
+    {%- endif ~%}
+    <link href="{{ url(photo, {canonical: true}) }}" rel="enclosure" type="{{ photo.subtype }}" />
+    <content type="html">
+      {%- set content -%}
+      <p><img src="{{ url(photo, {canonical: true}) }}" width="{{ photo.width }}" height="{{ photo.height }}" alt="{{ photo_data.alt|default(photo_data.title|default)|e }}"></p>
+      {%- if photo_data.title is defined %}<p>{{ photo_data.title|e }}</p>{% endif -%}
+      {%- endset ~%}
+      {{ content|e }}
+    </content>
+  </entry>
+  {%- endfor ~%}
+</feed>
