@@ -140,6 +140,12 @@ Or use a provider:
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Cecilapp/photo-stream) [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FCecilapp%2Fphoto-stream&project-name=photo-stream&repository-name=photo-stream&demo-title=Photo%20Stream&demo-description=Super%20simple%20self%20hosted%20photo%20stream%2C%20powered%20by%20Cecil.&demo-url=https%3A%2F%2Fphoto-stream-demo.cecil.app&demo-image=https%3A%2F%2Fgithub.com%2FCecilapp%2Fphoto-stream%2Fraw%2Fmaster%2Fdocs%2Fscreenshot.jpg)
 
+### GitHub Pages
+
+The [`.github/workflows/build.yml`](.github/workflows/build.yml) workflow builds the website on each pull request, and deploys it to GitHub Pages on each push to the `main` or `master` branch.
+
+To use it, enable GitHub Pages in your repository settings (_Settings_ > _Pages_ > _Source_: **GitHub Actions**). The base URL is set automatically. If you don't need it, just delete the workflow file.
+
 ## License
 
 _Photo Stream_ is a free software distributed under the terms of the [MIT license](LICENSE).

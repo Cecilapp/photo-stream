@@ -1,0 +1,32 @@
+name: Build and deploy to GitHub Pages
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v6
+      - name: Build site
+        uses: Cecilapp/Action@v4
+  deploy:
+    # pull requests are only built, not deployed
+    if: github.event_name != 'pull_request'
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
