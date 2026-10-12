@@ -1,5 +1,4 @@
 #!/bin/bash
-BASEDIR=$(dirname "$0")
-echo "Site location: ${BASEDIR}"
-cd "$(dirname "$0")"
-php $BASEDIR/cecil.phar serve -v --open
+cd "$(dirname "$0")" || exit 1
+echo "Site location: $(pwd)"
+php cecil.phar serve -v --open

@@ -1,17 +1,21 @@
 {# fetches photos in "static/photos", sorted by date #}
 {% set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.exif.EXIF.DateTimeOriginal|default(a.date)|date('U') <=> b.exif.EXIF.DateTimeOriginal|default(b.date)|date('U')) %}
 {# reverses sort if necessary #}
-{% if site.photo.sort == 'desc'|default('asc') %}{%- set files = files|reverse %}{% endif %}
+{% if site.photo.sort|default('asc') == 'desc' %}{%- set files = files|reverse %}{% endif %}
+{% if files is not empty %}
 {# uses the first photo for Open Graph image #}
-{% set image = files|first.path %}
+{% set image = (files|first).path %}
 {# creates first asset for preload #}
 {% set image_asset = asset(image)|resize(site.photo.size.thumbnail|default(640)) %}
+{% endif %}
 
-{% extends '_default/page.html.twig' %}
+{% extends 'page.html.twig' %}
 
     {%- block head -%}
     {{ parent() }}
+    {%- if image_asset is defined %}
     <link rel="preload" as="image" href="{{ url(image_asset|webp) }}" imagesrcset="{{ image_srcset(image_asset|webp) }}" imagesizes="{{ image_sizes('default') }}">
+    {%- endif %}
     <style>{{ asset(site.photoswipe.core.css, {fallback: 'photoswipe/photoswipe.css'})|inline }}</style>
     <style>{{ asset(site.photoswipe.caption.css, {fallback: 'photoswipe/photoswipe-dynamic-caption-plugin.css'})|inline }}</style>
     {%- endblock head -%}
@@ -97,18 +101,17 @@
       {%- block content ~%}
       <div id="gallery">
         <h1 class="title"><a href="{{ url(site.home) }}#" title="{{ site.description|default(site.title) }}">{{ site.title }}</a></h1>
+        {%- set placeholder = site.photo.placeholder ?? false -%}
         {%- for file in files ~%}
-          {%- if site.data.photos[file.basename] is defined ~%}
-            {%- set photo_data = site.data.photos[file.basename] -%}
-          {%- endif ~%}
+          {%- set photo_data = site.data.photos[file.basename] ?? {} -%}
           {%- set photo = asset(file.path)|resize(site.photo.size.thumbnail|default(640))|webp -%}
           {%- set photo_full = asset(file.path)|resize(site.photo.size.full|default(1920)) ~%}
-          {%- if site.photo.placeholder ?? false == false ~%}
-        <div class="photo">
-          {%- elseif site.photo.placeholder ?? false == 'image' ~%}
+          {%- if placeholder == 'image' ~%}
         <div class="photo" style="background-image:url({{ photo|lqip }});background-repeat:no-repeat;background-position:center;background-size:cover;">
-          {%- elseif site.photo.placeholder ?? false == 'color' ~%}
+          {%- elseif placeholder == 'color' ~%}
         <div class="photo" style="background-color:{{ photo|dominant_color }}">
+          {%- else ~%}
+        <div class="photo">
           {%- endif ~%}
           {%- set attributes = {alt: photo_data.alt|default(photo_data.title|default), decoding: 'async'} -%}
           {%- if loop.index > 10 %}{% set attributes = attributes|merge({loading: 'lazy'}) %}{% endif ~%}
@@ -134,7 +137,6 @@
           </div>
           {%- endif ~%}
         </div>
-        {%- set photo_data = '' -%}
         {%- endfor ~%}
       </div>
       <script type="module">

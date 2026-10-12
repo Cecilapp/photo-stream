@@ -1,6 +1,11 @@
 title: "Photo Stream demo"
 description: "Super simple photo stream, powered by Unsplash & Cecil."
 baseurl: https://photo-stream-demo.cecil.app/
+language: en
+languages:
+  - code: en
+    name: English
+    locale: en_US
 author:
   name: Unsplash
   url: https://unsplash.com/s/photos/open-source
@@ -21,26 +26,31 @@ photo:
 
 photoswipe:
   core:
-    js: https://raw.githubusercontent.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.esm.js
-    css: https://raw.githubusercontent.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.css
+    js: https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js
+    css: https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css
   lightbox:
-    js: https://raw.githubusercontent.com/dimsemenov/PhotoSwipe/master/dist/photoswipe-lightbox.esm.js
+    js: https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js
   caption:
-    js: https://raw.githubusercontent.com/dimsemenov/photoswipe-dynamic-caption-plugin/main/photoswipe-dynamic-caption-plugin.esm.js
-    css: https://raw.githubusercontent.com/dimsemenov/photoswipe-dynamic-caption-plugin/main/photoswipe-dynamic-caption-plugin.css
+    js: https://cdn.jsdelivr.net/npm/photoswipe-dynamic-caption-plugin@1.2.7/photoswipe-dynamic-caption-plugin.esm.js
+    css: https://cdn.jsdelivr.net/npm/photoswipe-dynamic-caption-plugin@1.2.7/photoswipe-dynamic-caption-plugin.css
 
 pages:
   default:
     sitemap:
       published: false
+    xsl/sitemap:
+      published: false
     xsl/atom:
       published: false
     xsl/rss:
       published: false
+output:
+  pagetypeformats:
+    homepage: [html]
 static:
   load: true
 metatags:
-  jsonld: true
+  data: true
 assets:
   images:
     optimize: false

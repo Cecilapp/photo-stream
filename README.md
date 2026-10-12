@@ -18,7 +18,7 @@ Demo: <https://photo-stream-demo.cecil.app> (hosted by [Netlify](https://www.net
 
 ## Install
 
-> PHP 8.3+ and [Cecil](https://cecil.app/download/) 8 are required.
+> PHP 8.3+ and [Cecil](https://cecil.app/download/) 9 are required.
 
 First you should clone or download the [Git repository](https://github.com/Cecilapp/photo-stream.git), or run `composer create-project cecil/photo-stream myproject`.
 
@@ -66,6 +66,8 @@ photo:
     full: 1920
   placeholder: image # image, color or false
 ```
+
+[PhotoSwipe](https://photoswipe.com) files are loaded from [jsDelivr](https://www.jsdelivr.com) (pinned versions, see `photoswipe` in [`cecil.yml`](cecil.yml)), with a fallback to the local copies in `assets/photoswipe`.
 
 ### Preview locally
 
