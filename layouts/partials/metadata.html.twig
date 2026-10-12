@@ -46,10 +46,13 @@
 }|filter(v => v is not null and v is not same as('')) ~%}
 {%- if metadata is not empty ~%}
 <div class="metadata" hidden>
-  <dl>
-  {%- for label, value in metadata ~%}
-    <dt>{{ label|trans }}</dt><dd>{{ value }}</dd>
-  {%- endfor ~%}
-  </dl>
+  <details>
+    <summary>{{ 'Metadata'|trans }}</summary>
+    <dl>
+    {%- for label, value in metadata ~%}
+      <dt>{{ label|trans }}</dt><dd>{{ value }}</dd>
+    {%- endfor ~%}
+    </dl>
+  </details>
 </div>
 {%- endif ~%}

@@ -117,12 +117,19 @@
         color: {{ site.photo.style.color.text }};
       }
       {%- if site.photo.metadata|default(false) %}
+      .pswp__dynamic-caption details {
+        margin: 1rem 0 0;
+        font-size: small;
+      }
+      .pswp__dynamic-caption summary {
+        cursor: pointer;
+        opacity: .6;
+      }
       .pswp__dynamic-caption dl {
         display: grid;
         grid-template-columns: auto 1fr;
         gap: .2rem .75rem;
-        margin: 1rem 0 0;
-        font-size: small;
+        margin: .5rem 0 0;
         line-height: normal;
       }
       .pswp__dynamic-caption dt {
@@ -209,13 +216,27 @@
           pswpModule: () => import('{{ asset(site.photoswipe.core.js, {fallback: 'photoswipe/photoswipe.esm.js'}) }}'),
           errorMsg: '{% trans -%}The photo cannot be loaded{%- endtrans %}',
         });
+        // metadata: open/closed state, kept from one photo to another (and between visits)
+        let metadataOpen = false;
+        try { metadataOpen = localStorage.getItem('metadata-open') === '1'; } catch (e) {}
+        document.addEventListener('toggle', (event) => {
+          if (!event.target.matches?.('.pswp__dynamic-caption details')) return;
+          metadataOpen = event.target.open;
+          try { localStorage.setItem('metadata-open', metadataOpen ? '1' : '0'); } catch (e) {}
+          // syncs captions of the preloaded slides
+          document.querySelectorAll('.pswp__dynamic-caption details').forEach((details) => { details.open = metadataOpen; });
+        }, true);
         const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
           type: 'auto',
           captionContent: (slide) => {
             const photo = slide.data.element?.closest('.photo');
             if (!photo) return '';
             return ['.caption', '.metadata']
-              .map((selector) => photo.querySelector(selector)?.innerHTML ?? '')
+              .map((selector) => {
+                const element = photo.querySelector(selector)?.cloneNode(true);
+                element?.querySelector('details')?.toggleAttribute('open', metadataOpen);
+                return element?.innerHTML ?? '';
+              })
               .join('');
           },
         });
