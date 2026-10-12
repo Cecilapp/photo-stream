@@ -1,0 +1,55 @@
+{#-
+  Photo metadata, displayed in the lightbox caption.
+  Reads EXIF data of the original file; each value can be overridden in "data/photos.yaml" (`exif` key).
+  Expects: `file` (static file) and `photo_data` (photo data).
+-#}
+{%- set original = asset(file.path) -%}
+{%- set ifd0 = file.exif.IFD0 ?? {} -%}
+{%- set exif = file.exif.EXIF ?? {} -%}
+{%- set meta = photo_data.exif ?? {} -%}
+{%- set camera = null -%}
+{%- if ifd0.Model is defined -%}
+  {%- set camera = ifd0.Make is defined and not (ifd0.Model starts with ifd0.Make) ? ifd0.Make|trim ~ ' ' ~ ifd0.Model|trim : ifd0.Model|trim -%}
+{%- endif -%}
+{%- set focal = null -%}
+{%- if exif.FocalLength is defined -%}
+  {%- set r = exif.FocalLength|split('/') -%}
+  {%- set focal = (r|length == 2 and r[1] > 0 ? (r[0] / r[1])|round(1) : r[0]) ~ ' mm' -%}
+{%- endif -%}
+{%- set aperture = null -%}
+{%- if exif.FNumber is defined -%}
+  {%- set r = exif.FNumber|split('/') -%}
+  {%- set aperture = 'ƒ/' ~ (r|length == 2 and r[1] > 0 ? (r[0] / r[1])|round(1) : r[0]) -%}
+{%- endif -%}
+{%- set exposure = null -%}
+{%- if exif.ExposureTime is defined -%}
+  {%- set r = exif.ExposureTime|split('/') -%}
+  {%- set seconds = r|length == 2 and r[1] > 0 ? r[0] / r[1] : r[0] -%}
+  {%- set exposure = (seconds > 0 and seconds < 1 ? '1/' ~ (1 / seconds)|round : seconds|round(1)) ~ ' s' -%}
+{%- endif -%}
+{%- set iso = exif.ISOSpeedRatings ?? exif.PhotographicSensitivity ?? null -%}
+{%- set taken = null -%}
+{%- if exif.DateTimeOriginal is defined -%}
+  {%- set dt = exif.DateTimeOriginal|split(' ') -%}
+  {%- set taken = (dt[0]|replace({':': '-'}) ~ ' ' ~ (dt[1] ?? ''))|trim -%}
+{%- endif -%}
+{%- set metadata = {
+  'Camera': meta.camera ?? camera,
+  'Lens': meta.lens ?? exif.LensModel ?? exif['UndefinedTag:0xA434'] ?? null,
+  'Focal length': meta.focal_length ?? focal,
+  'Aperture': meta.aperture ?? aperture,
+  'Exposure': meta.exposure ?? exposure,
+  'ISO': meta.iso ?? (iso is iterable ? iso|first : iso),
+  'Date taken': meta.date ?? taken,
+  'Dimensions': original.width ? original.width ~ ' × ' ~ original.height ~ ' px' : null,
+  'File size': original.size ? (original.size / 1048576)|round(1) ~ ' MB' : null,
+}|filter(v => v is not null and v is not same as('')) ~%}
+{%- if metadata is not empty ~%}
+<div class="metadata" hidden>
+  <dl>
+  {%- for label, value in metadata ~%}
+    <dt>{{ label|trans }}</dt><dd>{{ value }}</dd>
+  {%- endfor ~%}
+  </dl>
+</div>
+{%- endif ~%}

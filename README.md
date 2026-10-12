@@ -11,6 +11,7 @@ Demo: <https://photo-stream-demo.cecil.app> (hosted by [Netlify](https://www.net
 - Responsive images & mobile friendly
 - Files optimized and lazy loaded
 - Rich content caption
+- Photo metadata (EXIF) in the lightbox
 - Image placeholder (low quality or dominant color)
 - Keyboard navigation
 - Direct download button
@@ -47,6 +48,24 @@ For each photo you can add a title, an alternative text and the author name/URL,
     url: <author URL>
 ```
 
+### Show metadata (optional)
+
+When `photo.metadata` is enabled (see [configuration](#configuration)), the lightbox caption shows the photo metadata, read from the file EXIF data: camera, lens, focal length, aperture, exposure, ISO and date taken, plus the dimensions and file size.
+
+Only available values are displayed. If a photo has no EXIF data (e.g. stripped on export), or to fix a value, you can set it in [`data/photos.yaml`](data/photos.yaml):
+
+```yaml
+<file basename>:
+  exif:
+    camera: <camera> # e.g.: Fujifilm X-T4
+    lens: <lens> # e.g.: XF 23mm F2
+    focal_length: <focal length> # e.g.: 23 mm
+    aperture: <aperture> # e.g.: ƒ/2
+    exposure: <exposure time> # e.g.: 1/500 s
+    iso: <ISO> # e.g.: 160
+    date: <date taken> # e.g.: 2024-06-12 18:42
+```
+
 ### Configuration
 
 You can define gallery title, baseurl, author, colors, thumbnails size, sort, etc. by editing the [`cecil.yml`](cecil.yml) file:
@@ -59,12 +78,13 @@ photo:
       text: white
     img:
       height: 300px
-      margin: 2px
+      margin: 4px
   sort: asc
   size:
     thumbnail: 640
     full: 1920
   placeholder: image # image, color or false
+  metadata: true # displays photo metadata (EXIF) in the lightbox caption
 ```
 
 [PhotoSwipe](https://photoswipe.com) files are loaded from [jsDelivr](https://www.jsdelivr.com) (pinned versions, see `photoswipe` in [`cecil.yml`](cecil.yml)), with a fallback to the local copies in `assets/photoswipe`.

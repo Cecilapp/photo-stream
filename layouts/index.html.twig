@@ -33,7 +33,7 @@
       #gallery h1.title {
         position: fixed;
         z-index: 1;
-        margin: 0.5rem;
+        margin: 0.6rem;
         font-size: x-large;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -96,6 +96,22 @@
       .pswp__dynamic-caption a {
         color: {{ site.photo.style.color.text }};
       }
+      {%- if site.photo.metadata|default(false) %}
+      .pswp__dynamic-caption dl {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: .2rem .75rem;
+        margin: 1rem 0 0;
+        font-size: small;
+        line-height: normal;
+      }
+      .pswp__dynamic-caption dt {
+        opacity: .6;
+      }
+      .pswp__dynamic-caption dd {
+        margin: 0;
+      }
+      {%- endif %}
       {%- endblock css -%}
 
       {%- block content ~%}
@@ -136,6 +152,9 @@
             {%- endif ~%}
           </div>
           {%- endif ~%}
+          {%- if site.photo.metadata|default(false) ~%}
+          {%- include 'partials/metadata.html.twig' with {file: file, photo_data: photo_data} only ~%}
+          {%- endif ~%}
         </div>
         {%- endfor ~%}
       </div>
@@ -153,7 +172,14 @@
           errorMsg: '{% trans -%}The photo cannot be loaded{%- endtrans %}',
         });
         const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
-          captionContent: '.caption',
+          type: 'auto',
+          captionContent: (slide) => {
+            const photo = slide.data.element?.closest('.photo');
+            if (!photo) return '';
+            return ['.caption', '.metadata']
+              .map((selector) => photo.querySelector(selector)?.innerHTML ?? '')
+              .join('');
+          },
         });
         lightbox.on('uiRegister', function() {
           lightbox.pswp.ui.registerElement({
