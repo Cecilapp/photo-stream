@@ -37,10 +37,11 @@ Just drop image files in the `static/photos` directory.
 
 ### Add details (optional)
 
-For each photo you can add a title, an alternative text and the author name/URL, through the [`data/photos.yaml`](data/photos.yaml) file:
+For each photo you can add a date, a title, an alternative text and the author name/URL, through the [`data/photos.yaml`](data/photos.yaml) file:
 
 ```yaml
 <file basename>: # without file extension
+  date: <date> # e.g.: 2025-06-12, used to sort photos
   title: <photo title>
   alt: <alternative text>
   author:
@@ -79,7 +80,7 @@ photo:
     img:
       height: 300px
       margin: 4px
-  sort: asc
+  sort: asc # asc or desc, by date: "date" in data/photos.yaml, else EXIF date taken, else file date
   size:
     thumbnail: 640
     full: 1920

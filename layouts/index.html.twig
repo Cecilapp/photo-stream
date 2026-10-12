@@ -1,5 +1,9 @@
-{# fetches photos in "static/photos", sorted by date #}
-{% set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) => a.exif.EXIF.DateTimeOriginal|default(a.date)|date('U') <=> b.exif.EXIF.DateTimeOriginal|default(b.date)|date('U')) %}
+{# fetches photos in "static/photos", sorted by date: "date" in "data/photos.yaml", then EXIF date taken, then file date #}
+{% set files = site.static|filter(f => f.path matches '/^photos/')|sort((a, b) =>
+  (site.data.photos[a.basename].date ?? a.exif.EXIF.DateTimeOriginal ?? a.date)|date('U')
+  <=>
+  (site.data.photos[b.basename].date ?? b.exif.EXIF.DateTimeOriginal ?? b.date)|date('U')
+) %}
 {# reverses sort if necessary #}
 {% if site.photo.sort|default('asc') == 'desc' %}{%- set files = files|reverse %}{% endif %}
 {% if files is not empty %}
