@@ -9,8 +9,11 @@
 {% if files is not empty %}
 {# uses the first photo for Open Graph image #}
 {% set image = (files|first).path %}
-{# creates first asset for preload #}
-{% set image_asset = asset(image)|resize(site.photo.size.thumbnail|default(640)) %}
+{# creates first asset for preload (same "src" and "srcset" as the thumbnail) #}
+{% set image_original = asset(image) %}
+{% set image_width = site.photo.size.thumbnail|default(640) %}
+{% set image_asset = image_original|resize(image_width)|webp %}
+{% set image_srcset = image_original.width >= image_width * 2 ? url(image_asset) ~ ' 1x, ' ~ url(image_original|resize(image_width * 2)|webp) ~ ' 2x' : null %}
 {% endif %}
 
 {% extends 'page.html.twig' %}
@@ -18,7 +21,7 @@
     {%- block head -%}
     {{ parent() }}
     {%- if image_asset is defined %}
-    <link rel="preload" as="image" href="{{ url(image_asset|webp) }}" imagesrcset="{{ image_srcset(image_asset|webp) }}" imagesizes="{{ image_sizes('default') }}">
+    <link rel="preload" as="image" href="{{ url(image_asset) }}"{% if image_srcset %} imagesrcset="{{ image_srcset }}"{% endif %}>
     {%- endif %}
     <style>{{ asset(site.photoswipe.core.css, {fallback: 'photoswipe/photoswipe.css'})|inline }}</style>
     <style>{{ asset(site.photoswipe.caption.css, {fallback: 'photoswipe/photoswipe-dynamic-caption-plugin.css'})|inline }}</style>
@@ -131,8 +134,18 @@
         {%- set placeholder = site.photo.placeholder ?? false -%}
         {%- for file in files ~%}
           {%- set photo_data = site.data.photos[file.basename] ?? {} -%}
-          {%- set photo = asset(file.path)|resize(site.photo.size.thumbnail|default(640))|webp -%}
-          {%- set photo_full = asset(file.path)|resize(site.photo.size.full|default(1920)) ~%}
+          {%- set original = asset(file.path) -%}
+          {%- set thumbnail_width = site.photo.size.thumbnail|default(640) -%}
+          {%- set photo = original|resize(thumbnail_width)|webp -%}
+          {%- set photo_full = original|resize(site.photo.size.full|default(1920)) -%}
+          {#- thumbnail: 2x version for high density screens -#}
+          {%- set photo_srcset = original.width >= thumbnail_width * 2 ? url(photo) ~ ' 1x, ' ~ url(original|resize(thumbnail_width * 2)|webp) ~ ' 2x' : null -%}
+          {#- lightbox: WebP versions (intermediate widths + full), picked by PhotoSwipe according to the displayed size -#}
+          {%- set photo_full_srcset = [] -%}
+          {%- for width in (site.photo.size.full_widths ?? [768, 1280])|filter(w => w < photo_full.width) -%}
+            {%- set photo_full_srcset = photo_full_srcset|merge([url(original|resize(width)|webp) ~ ' ' ~ width ~ 'w']) -%}
+          {%- endfor -%}
+          {%- set photo_full_srcset = photo_full_srcset|merge([url(photo_full|webp) ~ ' ' ~ photo_full.width ~ 'w']) ~%}
           {%- if placeholder == 'image' ~%}
         <div class="photo" style="background-image:url({{ photo|lqip }});background-repeat:no-repeat;background-position:center;background-size:cover;">
           {%- elseif placeholder == 'color' ~%}
@@ -141,8 +154,9 @@
         <div class="photo">
           {%- endif ~%}
           {%- set attributes = {alt: photo_data.alt|default(photo_data.title|default), decoding: 'async'} -%}
+          {%- if photo_srcset %}{% set attributes = attributes|merge({srcset: photo_srcset}) %}{% endif -%}
           {%- if loop.index > 10 %}{% set attributes = attributes|merge({loading: 'lazy'}) %}{% endif ~%}
-          <a href="{{ url(photo_full) }}" data-pswp-width="{{ photo_full.width }}" data-pswp-height="{{ photo_full.height }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
+          <a href="{{ url(photo_full) }}" data-pswp-srcset="{{ photo_full_srcset|join(', ') }}" data-pswp-width="{{ photo_full.width }}" data-pswp-height="{{ photo_full.height }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
             {{ html(photo, attributes) }}
           </a>
           {%- if photo_data.title is defined or photo_data.author.name is defined ~%}
