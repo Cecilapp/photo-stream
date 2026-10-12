@@ -42,6 +42,7 @@
         z-index: 1;
         margin: 0.6rem;
         font-size: x-large;
+        text-shadow: 0 0 .4rem rgba($background, .8), 0 1px 2px rgba($background, .9);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
@@ -89,13 +90,18 @@
         font-size: small;
         font-style: italic;
         line-height: normal;
-        background-color: $background;
-        opacity: .4;
+        background-color: rgba($background, .6);
+        opacity: .7;
+        transition: opacity .5s ease-out, background-color .5s ease-out;
+        /* touch screens: no hover, so the caption is always fully visible */
+        @media (hover: none) {
+          opacity: 1;
+        }
       }
-      #gallery div.caption:hover {
-        background-color: $background;
+      #gallery div.photo:hover div.caption,
+      #gallery div.photo:focus-within div.caption {
+        background-color: rgba($background, .8);
         opacity: 1;
-        transition: opacity .5s ease-out;
       }
       #gallery div.caption a {
         text-decoration: none;
@@ -147,16 +153,19 @@
           {%- endfor -%}
           {%- set photo_full_srcset = photo_full_srcset|merge([url(photo_full|webp) ~ ' ' ~ photo_full.width ~ 'w']) ~%}
           {%- if placeholder == 'image' ~%}
-        <div class="photo" style="background-image:url({{ photo|lqip }});background-repeat:no-repeat;background-position:center;background-size:cover;">
+        <div class="photo" id="{{ file.basename }}" style="background-image:url({{ photo|lqip }});background-repeat:no-repeat;background-position:center;background-size:cover;">
           {%- elseif placeholder == 'color' ~%}
-        <div class="photo" style="background-color:{{ photo|dominant_color }}">
+        <div class="photo" id="{{ file.basename }}" style="background-color:{{ photo|dominant_color }}">
           {%- else ~%}
-        <div class="photo">
+        <div class="photo" id="{{ file.basename }}">
           {%- endif ~%}
           {%- set attributes = {alt: photo_data.alt|default(photo_data.title|default), decoding: 'async'} -%}
           {%- if photo_srcset %}{% set attributes = attributes|merge({srcset: photo_srcset}) %}{% endif -%}
-          {%- if loop.index > 10 %}{% set attributes = attributes|merge({loading: 'lazy'}) %}{% endif ~%}
-          <a href="{{ url(photo_full) }}" data-pswp-srcset="{{ photo_full_srcset|join(', ') }}" data-pswp-width="{{ photo_full.width }}" data-pswp-height="{{ photo_full.height }}" aria-label="{{ "Click to view this photo in full size"|trans }}">
+          {%- if loop.index > 10 %}{% set attributes = attributes|merge({loading: 'lazy'}) %}{% endif -%}
+          {%- set photo_name = photo_data.title|default(photo_data.alt|default) -%}
+          {%- set label = photo_name ? 'View “%photo_name%” in full size'|trans({'%photo_name%': photo_name}) : 'Click to view this photo in full size'|trans -%}
+          {%- set photo_download = site.photo.download|default('original') == 'full' ? url(photo_full) : url(file.path) ~%}
+          <a href="{{ url(photo_full) }}" data-pswp-srcset="{{ photo_full_srcset|join(', ') }}" data-pswp-width="{{ photo_full.width }}" data-pswp-height="{{ photo_full.height }}" data-download="{{ photo_download }}" aria-label="{{ label }}">
             {{ html(photo, attributes) }}
           </a>
           {%- if photo_data.title is defined or photo_data.author.name is defined ~%}
@@ -222,12 +231,29 @@
               el.setAttribute('target', '_blank');
               el.setAttribute('rel', 'noopener');
               pswp.on('change', () => {
-                el.href = pswp.currSlide.data.src;
+                el.href = pswp.currSlide.data.element?.querySelector('[data-download]')?.dataset.download ?? pswp.currSlide.data.src;
               });
             }
           });
         });
+        // deep link: the URL hash is the ID of the displayed photo
+        const photos = [...document.querySelectorAll('#gallery .photo')];
+        lightbox.on('change', () => {
+          const id = lightbox.pswp.currSlide.data.element?.closest('.photo')?.id;
+          if (id) history.replaceState(null, '', '#' + encodeURIComponent(id));
+        });
+        lightbox.on('close', () => {
+          history.replaceState(null, '', location.pathname + location.search);
+        });
+        const openFromHash = () => {
+          if (lightbox.pswp) return;
+          const id = decodeURIComponent(location.hash.slice(1));
+          const index = photos.findIndex((photo) => photo.id === id);
+          if (index >= 0) lightbox.loadAndOpen(index);
+        };
+        window.addEventListener('hashchange', openFromHash);
         lightbox.init();
+        openFromHash();
         {%- endapply -%}
       </script>
       {%- endblock content ~%}

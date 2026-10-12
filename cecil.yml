@@ -25,6 +25,7 @@ photo:
     full_widths: [768, 1280] # intermediate widths of the full size photo, loaded according to the screen size
   placeholder: image # image, color or false
   metadata: true # displays photo metadata (EXIF) in the lightbox caption
+  download: original # download button: original file or full (resized) photo
 
 photoswipe:
   core:

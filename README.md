@@ -14,7 +14,8 @@ Demo: <https://photo-stream-demo.cecil.app> (hosted by [Netlify](https://www.net
 - Photo metadata (EXIF) in the lightbox
 - Image placeholder (low quality or dominant color)
 - Keyboard navigation
-- Direct download button
+- Direct download button (original or resized file)
+- Shareable link to each photo
 - Simple workflow: drag & drop and commit
 
 ## Install
@@ -87,6 +88,7 @@ photo:
     full_widths: [768, 1280] # intermediate widths of the full size photo, loaded according to the screen size
   placeholder: image # image, color or false
   metadata: true # displays photo metadata (EXIF) in the lightbox caption
+  download: original # download button: original file or full (resized) photo
 ```
 
 [PhotoSwipe](https://photoswipe.com) files are loaded from [jsDelivr](https://www.jsdelivr.com) (pinned versions, see `photoswipe` in [`cecil.yml`](cecil.yml)), with a fallback to the local copies in `assets/photoswipe`.
