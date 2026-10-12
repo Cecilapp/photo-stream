@@ -2,7 +2,7 @@
 
 _Photo Stream_ is a self hosted static website for your photos, with really good loading performance, powered by [Cecil](https://cecil.app).
 
-![Screenshot](docs/screenshot.png)
+![Screenshot](docs/screenshot.jpg)
 
 Demo: <https://photo-stream-demo.cecil.app> (hosted by [Netlify](https://www.netlify.com) and fed by [Unsplash](https://unsplash.com)).
 
@@ -134,7 +134,7 @@ Then copy generated files in `_site` to your Web server.
 
 Or use a provider:
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Cecilapp/photo-stream) [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FCecilapp%2Fphoto-stream&project-name=photo-stream&repository-name=photo-stream&demo-title=Photo%20Stream&demo-description=Super%20simple%20self%20hosted%20photo%20stream%2C%20powered%20by%20Cecil.&demo-url=https%3A%2F%2Fphoto-stream-demo.cecil.app&demo-image=https%3A%2F%2Fgithub.com%2FCecilapp%2Fphoto-stream%2Fraw%2Fmaster%2Fdocs%2Fscreenshot.png)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Cecilapp/photo-stream) [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FCecilapp%2Fphoto-stream&project-name=photo-stream&repository-name=photo-stream&demo-title=Photo%20Stream&demo-description=Super%20simple%20self%20hosted%20photo%20stream%2C%20powered%20by%20Cecil.&demo-url=https%3A%2F%2Fphoto-stream-demo.cecil.app&demo-image=https%3A%2F%2Fgithub.com%2FCecilapp%2Fphoto-stream%2Fraw%2Fmaster%2Fdocs%2Fscreenshot.jpg)
 
 ## License
 
